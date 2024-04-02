@@ -1,0 +1,815 @@
+commit 16a81b673caea6e93a61781facdfe262994c4774
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Aug 25 15:52:19 2022 +0200
+
+    Updated to perform multi-arch builds
+
+commit 70ab58a51682e54626dcac1cfcabdd74244465e3
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Aug 25 15:51:50 2022 +0200
+
+    Detect and show NODE_NAME if set in environment
+    
+    - intention is that this would be set by the Kubernetes manifest accessing the value via the downwardAPI
+
+commit f8d58f474a3c0941d29ba95cd809cb6e3aacaa43
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Wed Jun 22 16:45:05 2022 +0200
+
+    Corrections to Prometheus format and logs o/p
+
+commit 32837824e7c5d572bcc194ea03962b3f1e3b417d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Wed Jun 22 16:44:41 2022 +0200
+
+    Add local test on demo binary
+
+commit 4d0a1e551e6c902b4335ce32a715abf95c0e4955
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Wed Jun 22 15:55:36 2022 +0200
+
+    Fixed some build.sh logic & checking
+
+commit cd38cd8104118e2b4dfaaf38f8ee8e6c89929c70
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Wed Jun 22 15:06:36 2022 +0200
+
+    Added Prometheus metrics on /metrics
+    
+    Cleaned up code, build script, cli options
+
+commit a63352402c3ee449fe9534dd151c39ecb87b41bb
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Mon Jun 20 17:34:29 2022 +0200
+
+    Make route_* fns explicit
+    
+    Corrected whitespace
+
+commit 93a0d01cc9a10fc630f4af153fbeffb9f987bbf5
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Mon Jun 20 17:32:58 2022 +0200
+
+    Add -local option for builds: build only binary, not the OCI image
+
+commit e01af0d713ef50c1b8f70d3aade90c596745dc99
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Nov 5 07:45:57 2021 +0100
+
+    Added 404_red.* images
+
+commit 6f58d3c5aafe3b0981e55ff4ce844ce4fffdbb3d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Nov 5 07:33:59 2021 +0100
+
+    Removed annoying linefeed - messing up /1
+
+commit 13c641fea439ea173b95c05c3b6149bd462810a0
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Nov 5 07:24:52 2021 +0100
+
+    Changed /1line to /1
+
+commit ed40fedaa5083b3a7b152a8c7d52ffade4dd55ad
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Nov 5 07:24:40 2021 +0100
+
+    Added back build steps ...
+
+commit 7d2407e9e856d956c472ae753eea9ce67c4523a9
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Nov 5 06:55:53 2021 +0100
+
+    Test browser action using -A Mozilla
+
+commit 314a3482c17257484e090cbe8e30c2c6cf19e0fa
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Nov 5 06:55:33 2021 +0100
+
+    Added docker login/push
+
+commit ee54bb90956203a89367a74217072052c1e576f1
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Nov 5 06:29:47 2021 +0100
+
+    Updated for new images
+
+commit f705f0b0261880dc2c760c5e60e38e3c13d8ec12
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Nov 5 06:28:09 2021 +0100
+
+    Now with hello1_yellow/quiz_blue/vote_green images for html
+
+commit 54ab1977680961d0344361912bcf255bf501e65f
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Nov 4 18:24:51 2021 +0100
+
+    Changed banner filenames to *.txt for better mime handling
+
+commit 2982dd6f6378807798c7756d6ee8b3c2d97c8cd8
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Nov 4 18:20:45 2021 +0100
+
+    Added 1st cut at banner-container
+
+commit 12090c18ca0c35850c0b83d2a114c575136c60ba
+Merge: 047a458 f6fa90b
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Jul 18 21:00:25 2021 +0200
+
+    Merge branch 'master' of ssh://github.com/mjbright/ckad-demo
+
+commit 047a45853db076a5c6e94ee4eef6c409b5e472c3
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Jul 18 21:00:09 2021 +0200
+
+    Added info on dealing text
+    
+    - ansi escape codes
+    
+    - creating asciitext images
+
+commit 3252996b04161cc06654c437943951ade76593e1
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Jul 18 20:59:03 2021 +0200
+
+    Changed order of image tags to 1/2/3 (blue/green/red)
+
+commit d86012746d40004fa9a73dbc209c14518e303796
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Jul 18 20:57:54 2021 +0200
+
+    Added Terraform png logo + asciitext
+    
+    TODO: add colours for terraform png
+
+commit f6fa90b37cb2a04808547aca797c4251f65c6fd2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 23:37:45 2021 +0000
+
+    Add date into push log
+
+commit 062faa07061d890f7e884c8a8ed3dfb783f03539
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 23:34:03 2021 +0000
+
+    Corrected push log name
+
+commit b7ab7fc645fa7f88f69dbecf97142f5b8f9e8631
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 23:30:59 2021 +0000
+
+    Added log of pushes
+
+commit 77933c8e14f2d42a3522ec82dc50c50b81c80cf7
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 23:09:48 2021 +0000
+
+    Corrected asciitext - add lf
+
+commit 8448c855edeca590f96e143ffaee8cbbfd2e5aa9
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 23:06:16 2021 +0000
+
+    Shortened sample asciitext o/p'
+    '
+
+commit 30e851f77d7dc465a990ebaacd6bc48041d16bf7
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 23:01:59 2021 +0000
+
+    Added PICTURE_COLOUR env var
+
+commit a5a2431871ff7bb64a185273f3b3cedbd4868dc9
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 21:42:14 2021 +0000
+
+    Added --dd/++dd/--kd/++kd options to select repos
+
+commit 4e6aa1a8195fb8526e84f83e451055703d98e0d0
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 21:39:49 2021 +0000
+
+    Updated USAGE info for --all
+
+commit 7932d32e6fb5848015fa829cfce7d945cfd6d124
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 21:38:11 2021 +0000
+
+    Added --help/-h option for USAGE info
+
+commit 8c1a909f37eb86f9018a5c37d644b2b350dcfb60
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 21:32:55 2021 +0000
+
+    Refactored build.sh
+    
+    - rationalized args
+    
+    -m Added --cleanup for images
+    
+    - Options to build/test/push
+
+commit 479b96c223360d963109b435aceea01d4bbba6b2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 20:50:59 2020 +0100
+
+    Added image version [1-6] option
+
+commit 3694746c44bfb3bc956bd812a9d9ff100a8d847f
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 20:44:04 2020 +0100
+
+    Separated build/dynamic base build as an initial step
+    
+    via docker_build_static_base and docker_build_dynamic_base
+    
+    using __BUILD_ENV_TARGET__ as Dockerfile parameter
+
+commit 81e8c6fd74e96ac7a9b7b7a42daf1fee51181ee5
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 12:04:01 2020 +0100
+
+    Added verbose flag/fixed push bug
+    
+    Was pushing wrong image due to IMAGE_TAG parameter to docker_push function
+
+commit 0ba3788f6656657e5609e543dde2dfa2d7acd8d1
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 12:02:56 2020 +0100
+
+    Added use of env vars
+
+commit f61a6f8d151f7195df99f9b01881c5009af30002
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 12:02:36 2020 +0100
+
+    Added use of env vars
+    
+    Removed tabs
+
+commit 6d7bbccb68f9aeeb0883092dc53872b7f1d1683f
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 12:02:07 2020 +0100
+
+    Added scripts for basic manual testing
+
+commit f74c8f8a3926d8771247a6937ad91791bdb70ea0
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 08:14:43 2020 +0100
+
+    Added use of nocache for builds under WSL(2)
+
+commit 3e33575886cac1af0317d64a2aa0d8f2be2a566b
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 08:14:14 2020 +0100
+
+    Tidied up
+
+commit 506281eff97d4ad29c04b4ff835cbed929b07632
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 08:03:40 2020 +0100
+
+    Git ignore vim .sw* files
+
+commit ed42479282ec7cf668d5e8f330fb6619b1085864
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 08:02:49 2020 +0100
+
+    Added more/better checks
+    
+    Building again
+
+commit 3f77879f47599599c492e42ca5a0f3a30f73e8a8
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Feb 1 08:02:27 2020 +0100
+
+    Modified back to simple ADD /static/img
+
+commit ed91d74ccc2769d0a6f3ff7a06e15190af6b6430
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Jan 31 09:51:33 2020 +0100
+
+    Updated for better templating
+    
+    Maybe smaller image size ...
+
+commit 3138922f5a24c5111643b9889ca8dff41eca5840
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Jan 31 09:42:12 2020 +0100
+
+    Corrected syntax erro
+
+commit aad8859b47129af1f2846e4cd9e7e71c0916963a
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Jan 31 09:41:27 2020 +0100
+
+    Added docker_asciitext.txt
+
+commit 42bb991154d58e76439a2065c3592fc7b1dfa77d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Jan 31 09:39:49 2020 +0100
+
+    Replaced corrupted image file
+
+commit 5004671c097598032c14fd2b6f228daa743af1da
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 18:43:35 2019 +0200
+
+    Added '-r <repo>' option
+    
+    Added message to say what repos/tags we are building
+
+commit d2255de303786c8de5679113bf56355051780692
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 18:42:54 2019 +0200
+
+    Fixed missing  error
+    
+    Added clearer DATE_VERSION messages
+
+commit c2bc7418a2e5789880842954c36fe41f5614b5d1
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 18:41:42 2019 +0200
+
+    Add stack trace to die
+
+commit 7d35978da3909344292d48dbef63cd039d846cb2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 18:41:18 2019 +0200
+
+    Autosetup link to logs/build.sh.log (latest run)
+
+commit 6790443a4ccf6f0b40c25dc85c387d71e0a7b1a9
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 10:19:58 2019 +0200
+
+    Use default CMD for tests
+
+commit 5f86ef9ad4605a2ebf52b9b01a9f10c9e2a8e44b
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 10:19:26 2019 +0200
+
+    Corrected delay logic before tests
+    
+    Removed testing values used for LIVE/READY
+
+commit 6c8447106f291608eadd547f5a4bdf1e424eb75f
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 10:17:41 2019 +0200
+
+    Added (visual) check of CMD command
+
+commit 125d1dc879fe12100196f99b31247df381f9e0f1
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 10:17:03 2019 +0200
+
+    Corrected CMD to use " quotes
+    
+    Use  var
+
+commit 73fedd80f01c9dbe0d05635401a9ed75a6244693
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 10:14:39 2019 +0200
+
+    Removed ENTRYPOINT and added comment
+
+commit 3a1feaf6f31953633ac7b6bb3d55f01525252423
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 08:22:55 2019 +0200
+
+    Removed -i/--image option
+
+commit da4a4d71d69c027679c0ddc6570fcdcf9d826945
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 08:22:41 2019 +0200
+
+    Removed extra line
+
+commit 53b0e2dd8f9c626bad6b33496d555b6e470904aa
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 07:39:56 2019 +0200
+
+    Corrected assignment
+
+commit 95dd631ca48ab889f797c967a168afed89040d92
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 07:38:32 2019 +0200
+
+    Allow enabling/disabling of headers via URL
+
+commit cc986e20aa80ced0b291ce400dd3bc0d16a894ed
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 07:35:46 2019 +0200
+
+    Changed templating
+    
+    Improved/reduced output
+
+commit 1f666e69f89df49ce87d59d7f97bcc9e28284f71
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 07:24:25 2019 +0200
+
+    Removed empty lines from asciitxt
+
+commit 2d460c6b1ae592e2a7e5ac4575bf3d9607193b92
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 07:19:07 2019 +0200
+
+    Removed extra space
+
+commit 37be0ac79da55d3f2131ddfd2f2c21ab6bf1b63d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 07:18:01 2019 +0200
+
+    Added hosttype to o/p, html template
+    
+    re-factored o/p text handling
+
+commit 96fe9a7e214bb75988b7df6f8f8f88aeb9dfce19
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 15 07:15:35 2019 +0200
+
+    Fixed kube version&job tests
+    
+    Clearer test messages
+
+commit c3adfb71b80c66a3be37f9777887ffbb597859b5
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 21:51:40 2019 +0200
+
+    Fixed version checking
+
+commit b66e3dc64b3ed0d3bed9b406ea0a45ce0675dec7
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 21:15:44 2019 +0200
+
+    Improved host/container/image message
+
+commit 8ca6ab9d5bcdaac1cbf09901abefe30d65b1476e
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 21:12:21 2019 +0200
+
+    Fixed kubernetes image check
+
+commit 238423ebe51755e4daecee910a8080b8e7b0c8be
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 21:11:56 2019 +0200
+
+    Fixed docker DATE_VERSION check
+
+commit afae2407e51bd58d00250abe209a0bac36ce5a9d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:35:42 2019 +0200
+
+    Refactor builds into build_and_push_tags
+
+commit f270dac89107e3537df76898d857595e80c103ca
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:35:20 2019 +0200
+
+    Add --all|-a option
+
+commit c1db2013d261c400c38dc9a2ee92f3141e934778
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:34:59 2019 +0200
+
+    Add error code check on TIME function
+
+commit ef0d776848ec0d98e42796aff38abc41461bd2e5
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:34:40 2019 +0200
+
+    Add kubernetes tests post docker push
+
+commit 8ac41d1ca77f00f5d9a6f30a9bc03dde103702e2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:34:17 2019 +0200
+
+    Test docker image w. docker
+
+commit 1bb18ada5695461814aed00031284319e3d70f6d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:33:23 2019 +0200
+
+    Fail if build fails
+
+commit 39bb23fe48bfb66ad5edf33bb3c9efab60dddaf0
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:32:23 2019 +0200
+
+    Refactored main.go mods - templated
+
+commit f49690f192adf7dd8a423381c6c5c4d1f2e47382
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:30:48 2019 +0200
+
+    Add binary version check
+
+commit dac81bd75fbed75f7fe0df1e2835d69c6e2c7859
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:28:33 2019 +0200
+
+    Add show version within Dockerfile
+
+commit b03b87bdf994240c7ccf46b6c8665431d9e3dd05
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:22:17 2019 +0200
+
+    Change image_version check
+    
+    Now checks on presence of digit, not equality
+    
+    So now will match :1 and :alpine1 as version 1
+
+commit 93330afe0714cd8063fdfc05f1ac2b28baf3d699
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat Sep 14 20:20:57 2019 +0200
+
+    Added --version flag
+
+commit d6001299686fd26fc34d60461451b6c03bd3f8db
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:54:07 2019 +0200
+
+    Produced dated build.sh.log
+
+commit e52f1d6250d19a001bdf88df1aec249efdd5be13
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:53:39 2019 +0200
+
+    Modified to template main.go
+
+commit cf2a5dcc9c4850af8bc7b41e60aa726bd783d0b4
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:38:30 2019 +0200
+
+    Added binary check
+
+commit 4c9445f53a28ca569494eba242b27bf4cec95b99
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:38:15 2019 +0200
+
+    Removed old comment
+
+commit 8a7febab725476f6b8c0cfae058ab6f6da34aae7
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:28:12 2019 +0200
+
+    Ignore logs/*
+
+commit 3fc06170327de20d92774caa49b9ad20d5ccd5b3
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:20:12 2019 +0200
+
+    Refactored multilineOP checks
+
+commit 4f7de5dcb8c82d419a4ed89f39c40244263cd071
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:19:52 2019 +0200
+
+    Added version functionality
+    
+    refactored logo_path creation
+
+commit 359197c832e9387406e690003e812fd59880f47c
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:15:28 2019 +0200
+
+    Add date/time info on each TIMEd command
+
+commit d8e5565864d72399ea1dc4f4592ddf2bf66f8758
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:14:24 2019 +0200
+
+    Add ls to verify binaries
+
+commit 36deb0955427c8d7446f70763f09da0b4804dae0
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 18:12:06 2019 +0200
+
+    Ignore .bak files
+
+commit 53b5c915205ac3f2574798e3c953915d7b99c98d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:50:41 2019 +0200
+
+    Made commands clearer in build script
+
+commit 1477ebe96a0e45117ab06b5d3ee22960c55cb551
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:50:09 2019 +0200
+
+    Moved logging of arguments to beginning
+
+commit ba09eb598fff45406c95575a0d4ff8037b03c959
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:15:35 2019 +0200
+
+    Add temp live/readiness delay values
+
+commit 4d845a7b96d65255147edbe5285dca99cc07c8d2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:15:05 2019 +0200
+
+    cli arg handling to select builds
+
+commit 87db03ae7f2a5fe5b2f659fa4df291a96cf07496
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:14:15 2019 +0200
+
+    Fixed bug (leading /CMD)
+
+commit 35b08c2b5bb252741fd6bc8b21223d401ed9b5e6
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:13:52 2019 +0200
+
+    Added automatic exec logging
+
+commit 73f1021f4edb0911ed760a4c774a6898d28fb2b2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:13:02 2019 +0200
+
+    Ignore all .log files
+
+commit 2e68a34a11b7ccee021be6611b7c2cafbb31ec3d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:12:25 2019 +0200
+
+    Removed unwanted newlines
+
+commit 0adcd1c25c1c92056c8632b3612dc31f81ff1a46
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 16:07:41 2019 +0200
+
+    Added .sh and .log files to ignore
+
+commit 41f305f4c0e54e313083834948a2d8c5b2cd01a5
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 11:23:32 2019 +0200
+
+    Show certain log messages only if vebose
+
+commit a309fc3d2116766c5c77ac2de8b80c28f1e632c9
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 11:21:37 2019 +0200
+
+    Add Message option
+    
+    Add into html template also
+
+commit 21d5fe9f3a4c40f3905e96531c998d589a451285
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 00:46:44 2019 +0200
+
+    Indentation changes ...
+
+commit aa8d9f3ef9bbf33fef245b239429c7284adfea8d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 00:46:25 2019 +0200
+
+    Added CLI_ARGS env var handling
+
+commit 6d3a0a40d91eba8632f49f0699f585589d917c8f
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 00:45:27 2019 +0200
+
+    Corrected /1 and /1line handling
+
+commit e0866fccc7bf340f6169a0dfd50342ad3fd50556
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 00:43:23 2019 +0200
+
+    TIME basic build
+
+commit 4fde03d4384bba8ab420b20ead1da0e3b15277aa
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 00:42:57 2019 +0200
+
+    Save a copy of generated Dockerfiles
+
+commit 94d7297ce6d91bcf0fc8b0cd010bbba6d7fa5c49
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 00:42:31 2019 +0200
+
+    Corrected CMD handling
+
+commit dbd467926a43db7c1c0fe80619c78b27827639d6
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Fri Sep 13 00:41:28 2019 +0200
+
+    Show demo-binary after build
+
+commit d667618b8b50d38c19779eac3cd74ccb4e10bc05
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 23:01:04 2019 +0200
+
+    Updated .gitignore with tmp/
+
+commit fc511411005a90248db33335456709e7abc7d815
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 23:00:28 2019 +0200
+
+    Added CMD into __TEMPLATE_CMD__ line
+
+commit ba51c6b575c8072683c41e76aa02a8bac0e966b2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 22:59:54 2019 +0200
+
+    Corrected /1 /1line tests
+
+commit 96ff8d3cf40c4cecdd6702fb33be3c2f3a9f0016
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 22:26:42 2019 +0200
+
+    Fixed CMD statement
+    
+    Added docker test of images
+    
+    Removed 'bad' image builds for now
+
+commit 12ce1e61fc3f2fbf53a03099fd44641fb2c40d1a
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 22:25:40 2019 +0200
+
+    Removed unnecessary '\n'
+
+commit 3ccc51c1fb000239ebb9354dd2e9e3f9c6ea3fc2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 21:44:44 2019 +0200
+
+    1st release
+    
+    cli args allow to change behaviour via entrypoint/cmd
+
+commit 8284e76c0832081becb8553411888171d4c6998b
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 21:43:48 2019 +0200
+
+    Added build script & Dockerfile.tmpl
+    
+    Builds multiple images ckad-demo/k8s-demp/docker-demo
+    
+    with multiple tags 1/2/3/4/5/6
+    
+    as scratch or alpine based images
+
+commit 2cb72758458e8a04a43f768cad0a53d8e64b1314
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 21:42:22 2019 +0200
+
+    Added .gitignore
+
+commit c3581f036a13e697d348f0cfeb27d4737701c72a
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 21:42:00 2019 +0200
+
+    Added index.html template
+
+commit 1f2316181c19db70ef09929ae2321d0c560f51e4
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 20:48:31 2019 +0200
+
+    Added assets into /static
+    
+    image and ascii art files
+    
+    css/font files
+
+commit f7b50b9ad81d24c64fd6921a763317a7bf26a0a4
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 17:46:02 2019 +0200
+
+    Added basic hello world static files
+
+commit 33819892477bfd9a419c1a0a22c36b73d354d051
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 17:45:40 2019 +0200
+
+    Added comments
+
+commit 2e5ab8ac906c9c6255919ab368cf7b24ab35690d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 17:45:20 2019 +0200
+
+    Extract image_version from name
+
+commit 2bd4022ba675d2cf23cef7b2a922c7bbf89ea38d
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 17:43:29 2019 +0200
+
+    Set default image name
+
+commit dbf99c79cfceee26754caa808c7d8e5fa0c23006
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Sep 12 17:00:38 2019 +0200
+
+    First static binary
+    
+    Has options [--listen ':port'] [-l <liveness secs>] [-r <readiness secs>] [-h] [-v]
+
+commit 4619cf777b25b0054d215f89031a19320e90d4c6
+Author: Mike BRIGHT <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Sep 1 10:44:14 2019 +0200
+
+    Initial commit
