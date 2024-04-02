@@ -1,2 +1,6 @@
 # container-images
+
 Various container image build envts - about time I gathered the good, the bad, the ugly in one place ...
+
+These are standalone container images for demoing, testing ...
+
