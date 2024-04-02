@@ -1,0 +1,67 @@
+commit 226c051b2e20c2433dadd7a76587fd7f8ff945d6
+Author: Mike BRIGHT <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Jul 18 10:27:22 2021 +0200
+
+    Created new run.sh to serve directly using python3
+    
+    Previously default run used Docker
+
+commit 7be126252c587dd6006d4a03112420efa0b417f7
+Author: Mike BRIGHT <1880109+mjbright@users.noreply.github.com>
+Date:   Sun Jul 18 10:23:57 2021 +0200
+
+    Renamed as run_docker.sh
+
+commit c67383eb4ed511ac913db3986c5c6ebcb7d1c8b2
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Sat May 9 22:25:48 2020 +0200
+
+    New dockerized
+    
+    - flask version with text or html responses
+    
+    - image version showing webslides+background image
+    
+    - html version showing text on coloured background
+
+commit 59b0ec0571c57dd3d223779a2d19adc258d20d09
+Author: mjbright <github.com@mjbright.net>
+Date:   Thu Oct 12 22:30:45 2017 +0200
+
+    Now change background class
+
+commit b0b929d2466fc0dd29b7d425b184d6e5728d93ea
+Author: mjbright <github.com@mjbright.net>
+Date:   Thu Oct 12 21:57:18 2017 +0200
+
+    Added new dark photos, Added test script
+
+commit 4b436aa381d61dab57d053301552768454024c0d
+Author: mjbright <github.com@mjbright.net>
+Date:   Thu Oct 12 21:20:31 2017 +0200
+
+    Added new images
+
+commit 0240c08fa373e1a894e2ca301cb39a60be6cd5e9
+Author: mjbright <github.com@mjbright.net>
+Date:   Thu Oct 12 21:20:12 2017 +0200
+
+    Added script to auto update index files for testing
+
+commit 2594f45266102437debdc4b167b1c5e83c4df425
+Author: mjbright <github.com@mjbright.net>
+Date:   Thu Oct 12 21:09:07 2017 +0200
+
+    Early version with darkened small park photo
+
+commit 742b80cff9b315c5087e23af886a0c4e85fd7b68
+Author: mjbright <github.com@mjbright.net>
+Date:   Thu Oct 12 09:23:13 2017 +0200
+
+    1st commit - ready to use
+
+commit 5e25d9be6182f0b62e64560b9f077d43f55fefc6
+Author: Mike BRIGHT <github.com@mjbright.net>
+Date:   Thu Oct 12 08:33:34 2017 +0200
+
+    Initial commit

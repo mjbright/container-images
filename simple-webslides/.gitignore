@@ -1,0 +1,5 @@
+OLD/
+.*.swp
+.*.swo
+__pycache__/
+flask.templates/

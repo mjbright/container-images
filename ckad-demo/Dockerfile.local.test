@@ -1,0 +1,17 @@
+
+# -- build stage ---------------------------------------------
+#FROM golang:alpine AS build-env-dynamic
+FROM golang:1.17.4-alpine3.15 AS build-env-dynamic
+
+ADD . /src
+
+# Command works:
+
+# VERSION to use with 'FROM alpine' below:
+#RUN cd /src && go build -o demo-binary
+
+# VERSION to use with 'FROM scratch' below:
+RUN cd /src && CGO_ENABLED=0 go build -a -o /mnt/demo-binary main.build.go
+
+RUN ls -al  /mnt/demo-binary; ls -alh /mnt/demo-binary; /mnt/demo-binary --version
+

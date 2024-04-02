@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CLEAN MARKUP = GOOD KARMA.
+      Hi source code lover,
+
+      you're a curious person and a fast learner ;)
+      Let's make something beautiful together. Contribute on Github:
+      https://github.com/webslides/webslides
+
+      Thanks!
+    -->
+
+    <!-- SEO -->
+    <title>WebSlides: Why WebSlides is so inspiring?</title>
+    <meta name="description" content="WebSlides is about good karma. Create your own HTML presentation instantly. Just the esentials.">
+
+    <!-- URL CANONICAL -->
+    <!-- <link rel="canonical" href="http://your-url.com/permalink"> -->
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,700,700i%7CMaitree:200,300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
+
+    <!-- CSS Base -->
+    <link rel="stylesheet" type='text/css' media='all' href="../static/css/webslides.css">
+
+    <!-- Optional - CSS SVG Icons (Font Awesome) -->
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/svg-icons.css">
+
+    <!-- SOCIAL CARDS (ADD YOUR INFO) -->
+
+    <!-- FACEBOOK -->
+    <meta property="og:url" content="http://your-url.com/permalink"> <!-- EDIT -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Why WebSlides? Good karma" />
+    <meta property="og:description" content="WebSlides is a very effective way to engage young audiences, customers, teams..."> <!-- EDIT -->
+    <meta property="og:updated_time" content="2017-01-04T16:27:50"> <!-- EDIT -->
+    <meta property="og:image" content="https://webslides.tv/static/images/share-karma.jpg" > <!-- EDIT -->
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="429">
+
+    <!-- TWITTER -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@webslides"> <!-- EDIT -->
+    <meta name="twitter:creator" content="@jlantunez"> <!-- EDIT -->
+    <meta name="twitter:title" content="Why WebSlides? Good karma"> <!-- EDIT -->
+    <meta name="twitter:description" content="WebSlides is a very effective way to engage young audiences, customers, teams..."> <!-- EDIT -->
+    <meta name="twitter:image" content="https://webslides.tv/static/images/share-karma.jpg"> <!-- EDIT -->
+
+    <!-- Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#333333">
+  </head>
+  <body>
+    <header role="banner">
+      <nav role="navigation">
+        <p class="logo"><a href="../index.html" title="WebSlides">WebSlides</a></p>
+        <ul>
+          <li class="github">
+            <a rel="external" href="https://github.com/webslides/webslides" title="Github">
+              <svg class="fa-github">
+                <use xlink:href="#fa-github"></use>
+              </svg>
+              <em>WebSlides</em>
+            </a>
+          </li>
+          <li class="twitter">
+            <a rel="external" href="https://twitter.com/webslides" title="Twitter">
+              <svg class="fa-twitter">
+                <use xlink:href="#fa-twitter"></use>
+              </svg>
+              <em>@WebSlides</em>
+            </a>
+          </li>
+          <!--  <li class="dribbble"><a rel="external" href="http://dribbble.com/webslides" title="Dribbble"><svg class="fa-dribbble"><use xlink:href="#fa-dribbble"></use></svg> <em>webslides</em></a></li> -->
+        </ul>
+      </nav>
+    </header>
+
+    <main role="main">
+      <article id="webslides" class="vertical">
+
+        <!-- Quick Guide
+          - Each parent <section> in the <article id="webslides"> element is an individual slide.
+          - Vertical sliding = <article id="webslides" class="vertical">
+          - <div class="wrap"> = container 90% / <div class="wrap size-50"> = 45%;
+        -->
+
+        <section>
+          <!--.wrap = container (width: 90%) -->
+          <div class="wrap aligncenter">
+            <h1 class="text-landing">__WELCOME_MESSAGE__</h1>
+	    <p class="text-intro"> __TEXT_INTRO__ </p>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+        <section class="bg-black aligncenter">
+          <!-- Overlay/Opacity: [class*="bg-"] > .background.dark or .light -->
+	  <!-- <span class="background" style="background-image:url('https://source.unsplash.com/OkAAx4mI2Hc/')"></span> -->
+          <span class="background" style="background-image:url('static/images/photo_park_small_dark.jpg')"></span>
+          <!-- background with a frame frame -->
+          <span class="background frame"></span>
+          <!--.wrap = container (width: 90%) -->
+          <div class="wrap fadeInUp">
+            <h1>
+              Everyone
+              <svg class="fa-heart-o">
+                <use xlink:href="#fa-heart-o"></use>
+              </svg>
+              Stories
+            </h1>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+      </article>
+    </main>
+    <!--main-->
+
+    <!-- Required -->
+    <script src="../static/js/webslides.js"></script>
+
+    <!-- Autoslide 5 seconds. If you don't want autoslide, remove: {autoslide: 5000} -->
+    <script>
+      window.ws = new WebSlides({ autoslide: 5000 });
+    </script>
+
+    <!-- OPTIONAL - svg-icons.js (fontastic.me - Font Awesome as svg icons) -->
+    <script defer src="../static/js/svg-icons.js"></script>
+
+  </body>
+</html>

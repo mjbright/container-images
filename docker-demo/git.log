@@ -1,0 +1,720 @@
+commit a4ad39a05cd0f70e0d8457e74041035742fcdb6c
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 19:57:31 2021 +0000
+
+    Added DEPRECATED notice in build.sh
+
+commit 2987e14081b202b372c794bbe63acdcccbd6d4be
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 19:54:43 2021 +0000
+
+    Removed unused code
+
+commit fc36a0c4d6464177773b54ff768b8374f86b1cf4
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 19:54:18 2021 +0000
+
+    Added options
+
+commit 85a95d54acee5e83eb838ef024198e5872353a4f
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Jan 5 19:37:27 2021 +0000
+
+    Cleaned up code
+    
+    - removed unnecessary templating
+    
+    - removed unused EXPOSED_PORT
+
+commit 1acd3e1b2cc599b4751a1df37b0cad0ba94d1191
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 23:04:56 2019 +0200
+
+    Build explicitly ckad-demo
+
+commit c3aa84d95c9a7f3184bea2a939f9804ab4613647
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 23:04:38 2019 +0200
+
+    Remove empty X-forward info
+
+commit 9063d8834d89b2e0d07089c362d02e42c68f5904
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 22:57:42 2019 +0200
+
+    Fixed code to create temp main.go files
+
+commit 4cfc789012e5bb2d4e264a79ed91a59ccefcfee7
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 22:57:07 2019 +0200
+
+    Reorganized code for /1line and better o/p
+
+commit c067bff687b73f16e83e2426db98b1dfab57a3c5
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 22:56:33 2019 +0200
+
+    Removed test.sh
+
+commit a9afd11f1ef7f26133695c45fc97d121375e2343
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 22:20:09 2019 +0200
+
+    Renamed TEMPLATE_ vars
+    
+    Added LIVENESS/READINESS variables
+    
+    Save main.go to tmp/main_<imagename>.go for reference
+
+commit decdb2c96e6a7cdca158380ba7816bbdd2468e0a
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 21:31:44 2019 +0200
+
+    Corrected EXT_PORT var name
+
+commit ace112e2ed4a0f0ce3bb4f3db4488dab94626e6a
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 21:29:09 2019 +0200
+
+    Changed type
+
+commit c0ed22b49e95aba396ac58b8ae7c685ca526d411
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 21:28:43 2019 +0200
+
+    Removed docker-demo file
+
+commit 21f0926028d6b108bc1571b6df27e67cab5865f9
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 21:28:16 2019 +0200
+
+    Added /1line option
+    
+    Add Pod ip address to output
+
+commit 78312a671b879a1f08bb9007dd9d6e44184e63f6
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 21:25:47 2019 +0200
+
+    Reverted to alpine base image
+
+commit 5e251fb27fa69fc745c96cbe17b30a117805a0da
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 21:23:37 2019 +0200
+
+    Removed unused Dockerfile.build
+
+commit 828ef52e02e68cbe3541843c2a29a3b9c3762e01
+Author: Mike Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 21:12:57 2019 +0200
+
+    Create ckad-demo images - for now
+
+commit b9c8e7893ffe3a9f4553279d196543bdd3288023
+Author: Mike Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Tue Aug 27 21:12:31 2019 +0200
+
+    Renamed variables EXT_PORT
+
+commit 219337aa73a2adaf243cc66a88bc84432e2151f5
+Author: Michael Bright <1880109+mjbright@users.noreply.github.com>
+Date:   Thu Nov 8 16:55:11 2018 +0100
+
+    Homogenized code
+    
+    Now port 80 internally
+
+commit 2519c9dc70fc2e8014a7e31b314645b178cca152
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 18:16:38 2018 +0100
+
+    Use :EXPOSE_PORT in template
+
+commit b53cf596f26b5155e60e52a2b63f47b816a2c36a
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 18:16:04 2018 +0100
+
+    Removed intermediate files
+
+commit 8d6d72ce2154c646a849be9a7020aa60139d28e3
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 18:15:17 2018 +0100
+
+    Use templated versions of Dockerfile and test.sh
+    
+    To allow to choose exposed port
+
+commit 1a2b4f71e9e7991ba25a5e192091e450ef1bdd69
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 14:37:21 2018 +0100
+
+    Merged into simple html template using conditional
+
+commit 3e88484395a90a34f0d7a22bb5fb75f933cc1fdf
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 14:35:44 2018 +0100
+
+    Reformatted
+
+commit 9806d6833b71f99e93b746d5239982e2fdfdd705
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 14:26:24 2018 +0100
+
+    Added -h headers option, shows pretty-printed headers
+
+commit 6776f10144d85b71f4fe1ce254ee80fa693b1b49
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 14:25:50 2018 +0100
+
+    Made headers left-aligned
+
+commit e92b579c4667a5aa3d7690a536c131c85b76425a
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 14:22:44 2018 +0100
+
+    Reorganized, do cli arg handling esp -h -v options
+
+commit 59e7b93fa5dc3c8837c56034bd3df0311d907a1a
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 14:22:12 2018 +0100
+
+    Don't archived templates/index.html.tmpl.verbose
+
+commit 01107d23523f201c6bfd274dc65dbe49585be34b
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 14:20:33 2018 +0100
+
+    Use DHUB credentials if present as env vars
+
+commit 9b65796053eb3bf3543d5bd138fd4ea6b3c5c4de
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 13:44:54 2018 +0100
+
+    Reformated code, Added verbose option with networking info shown, Reformated output
+
+commit df72b454cdd843d6c98521f1017beaab8cd6270d
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 12:39:23 2018 +0100
+
+    Added verbose html template
+
+commit 4a59de1a74848f313565fb431f1c0b2d263dd87d
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 12:39:04 2018 +0100
+
+    Separated Image info onto separate line
+
+commit 495ee92566c485254150fb0cef2062b101f14f24
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 12:38:25 2018 +0100
+
+    Added pre-proc of verbose template
+
+commit 5e0878255f462fc187abd6f4f3bd1c0b9c5f11ab
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 12:25:38 2018 +0100
+
+    Added TODO comments
+
+commit 71069eb44d2b755f9c10ea7cb1a6b6de61179ba6
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 12:23:18 2018 +0100
+
+    Added -v opiton and port handling
+
+commit 8e7d47c518603d76586602c88ccc7a7884c57a33
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Mon Feb 19 12:21:54 2018 +0100
+
+    Added -v option, spits out ip addresses
+
+commit e0022729ea20fcaf297fb49791376e46733d6ebc
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Sun Feb 18 20:22:42 2018 +0100
+
+    Added image info into html page
+
+commit 090529c868bfcb36c301fa1b0d1424afbbc959ca
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Sat Feb 17 09:36:26 2018 +0100
+
+    Added /test
+    
+    added statusCode handing on image version 3
+    
+    added delay handling on image version 4
+
+commit e218c36d8362f0214f59f7550ead1f0a9055374e
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Sat Feb 17 09:34:51 2018 +0100
+
+    Added CLEANUP
+
+commit 340cea2046e6e4e1d7f750e652d63bebcf0d3e9e
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Sat Feb 17 07:48:18 2018 +0100
+
+    Moved docker login to start
+    
+    Added image_version info
+
+commit 2ee0d51a5a7c85f84d84450509b1fada5da478f4
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Sat Feb 17 07:47:33 2018 +0100
+
+    Reordered Dockerfile for faster builds
+
+commit 49644a17e04d0abdafa28dda0baa0c1d126885af
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 20:04:07 2018 +0100
+
+    Added v3 and v4 which malfunction
+    
+    v3: returns 404
+    
+    v4: waits 60 secs before returning result
+
+commit 3f9d819d06b50266f4423d238b24bb19ef1f357b
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 19:45:19 2018 +0100
+
+    Build/test v5 and v6 also
+
+commit 210814e9697bba24fec5071678a48448a4c53800
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 19:44:57 2018 +0100
+
+    Added v5 and v6 cyan/white of docker images
+
+commit bf6869e58a6a0430be7a5f08c5574d108e995b26
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 19:35:47 2018 +0100
+
+    Added cyan/white images for k8s v5 and 6
+
+commit f214342cceb81c370d193d182db70c81d0d15acd
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 19:16:20 2018 +0100
+
+    Added version3 and version4 images
+    
+    with new colours: red and yellow
+    
+    Modified v1 and v2 to be blue and green
+    
+    Modified Kubernetes text image
+    
+    removed old versions 20 and 21
+
+commit 2a0c217cfaee4e668485ee9e9b4da2f279f14f2f
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 19:14:51 2018 +0100
+
+    Corrected syntax error
+
+commit 84f999f08e05190a9b884cba9154e04e5507f2db
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 19:00:59 2018 +0100
+
+    Send ascii-text image for httpie/elinks/lynx browsers also
+
+commit a0c28f166fce3605f0ca0eaea2103a84c5c6f0ac
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 18:19:47 2018 +0100
+
+    Corrected to use blue rather than cyan
+
+commit 92725c420a0b2af0f267ef3f91e4b05d9ee71841
+Author: Mike Bright <github.com@mjbright.net>
+Date:   Fri Feb 16 18:16:42 2018 +0100
+
+    Corrected to use blue rather than cyan
+
+commit c735312fdfa5ad15a98834b02ba77d9d75a3bf67
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Oct 1 22:32:48 2017 +0200
+
+    Added README
+
+commit 00820d24e923433d4c232cbca92fc59186baaa31
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Oct 1 22:28:52 2017 +0200
+
+    Inverted kubernetes txt images
+
+commit 361f3a0aecdce5f6878b8d018c4cf1070a4eeb32
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Oct 1 22:19:54 2017 +0200
+
+    Corrected 'docker build' command to include '.'
+
+commit ed16abdf2b946db905c99be285f29c08ccd3bbc7
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Oct 1 22:16:42 2017 +0200
+
+    Corrected REPLACE_LOGO to not include .png
+
+commit dbe4d84631134b3c3a2cfe0ee83aa8cdee9e8202
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Oct 1 22:16:03 2017 +0200
+
+    Refactored build script
+
+commit f5767b2b37f1478ea1fbcce5cc98b5bcde8ac791
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Oct 1 22:00:03 2017 +0200
+
+    Moved kubernetes.png to kubernetes_blue.png
+
+commit 3eb1328bcf2a1daca391b4c49dfb896da72eb808
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Oct 1 21:59:05 2017 +0200
+
+    Moved docker.png to docker_blue.png
+
+commit 86c79fe13f7c1a9c6e6349f43e329acaf18d68e7
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Oct 1 21:57:11 2017 +0200
+
+    Cleaned up print/log statements
+
+commit e4eaaba65a1b6e361ee86b141d3fa52226b42fde
+Author: mjbright <github.com@mjbright.net>
+Date:   Fri Sep 22 16:36:41 2017 +0200
+
+    New multi-stage build of multiple images
+
+commit 75101ecf676939bf0d2b72392b9bc4c5020347d4
+Author: mjbright <github.com@mjbright.net>
+Date:   Fri Sep 22 08:28:52 2017 +0200
+
+    Remove reference to deleted map file static/img/rastapasta.mapscii.txt
+
+commit 960b92913826d39b1ec988d8dafc6bd203dc6ddf
+Author: mjbright <github.com@mjbright.net>
+Date:   Fri Sep 22 08:27:20 2017 +0200
+
+    Improved text output info
+
+commit 38d918942b7d53c9618baf46ba51c6083d5a997a
+Author: mjbright <github.com@mjbright.net>
+Date:   Fri Sep 22 08:26:26 2017 +0200
+
+    Added /MAP uri and mapascii.txt
+
+commit 6a5521aa882d96c069cf403bcc8c98bda77bb570
+Author: mjbright <github.com@mjbright.net>
+Date:   Fri Sep 22 07:43:11 2017 +0200
+
+    Added mapascii.txt
+
+commit 6d87f34e7aec2a5d39390925adba2c4dbe7cc1ad
+Author: mjbright <github.com@mjbright.net>
+Date:   Fri Sep 22 07:41:57 2017 +0200
+
+    Added Kubernetes icon in png/text and different colours
+
+commit 982906680b0636ea0c266a38818160e31e5bbd92
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Apr 2 19:08:10 2017 +0200
+
+    Roll to v21 with red whale
+
+commit 7e54776ce753ba17f936ee728d561a8b38b03d76
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Apr 2 19:01:05 2017 +0200
+
+    Modified to serve coloured ascii-text whale to wget/curl requests
+
+commit 4987a9472b8341b008550efa95a4d2096b2e4482
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Apr 2 19:00:26 2017 +0200
+
+    Modified info class to highlight 'served from' info
+
+commit a66150b658edd2eb5a905640f170d50cbff8c1f3
+Author: mjbright <github.com@mjbright.net>
+Date:   Sun Apr 2 18:58:29 2017 +0200
+
+    Wind back to v20 with blue whale
+
+commit f0c4b0a366a58772465951a57d9b579e9b30b721
+Author: Mario Loriedo <mario.loriedo@gmail.com>
+Date:   Thu May 19 10:47:42 2016 +0200
+
+    Red whale
+
+commit c795e7886e9ffdf8774110819b4aa19daa84ab32
+Author: Mario Loriedo <mario.loriedo@gmail.com>
+Date:   Wed May 18 22:24:41 2016 +0200
+
+    Adding docker-demo Linux binary and more stuff
+
+commit ac4a8ce76cb59fc924b138b4d9c1d66dfe7034db
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Thu Mar 31 11:50:28 2016 -0400
+
+    use relative links for media
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit dfee661ec9569cc0393076c1f318e6724e263a56
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Jul 29 01:56:44 2015 -0700
+
+    updated tests
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 06ea121f6f8ba499f0ec6a5ceb5e83c30d9416c2
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Jul 29 01:54:59 2015 -0700
+
+    update makefile
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 907d757fc80751d7dfc65e762e0edda30ccd5021
+Merge: aa22266 fefec7a
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Jul 29 01:30:40 2015 -0700
+
+    merge master
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit aa22266d33412e39f002d62bdf008801231a4a00
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Jul 29 01:29:45 2015 -0700
+
+    build updates
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit fefec7a739eb3cb49cfb9447550908756c4a615b
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Thu Jul 2 22:28:04 2015 -0400
+
+    updated index template
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 1c5b428a159b1d6da7ded3342a4b88f256a92e27
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Thu Jul 2 22:25:10 2015 -0400
+
+    use x-forwarded-for header
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit ba4c94bd7a9dd9690d8bee858e73b3c6ed9d9572
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sat Jun 20 20:19:21 2015 -0700
+
+    Update index.html.tmpl
+
+commit b2a59d9a0f8eda3aeb3fe3d2f33929ab03eb1cda
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Fri Jun 19 10:33:09 2015 -0400
+
+    Update docker-compose.yml
+
+commit 6e6fecbf438133a1575d1a744bf21f2e44ebf601
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Thu Jun 18 12:30:03 2015 -0400
+
+    added compose file
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 6eae0b94e7c7918eb481600cab7e5fb8da55faa9
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Mon Jun 15 14:19:22 2015 -0400
+
+    added ping endpoint
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit bfe6ac40984a2636618087f0f8dea8843c8c7605
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Thu May 21 19:29:24 2015 -0400
+
+    Update index.html.tmpl
+
+commit 812176512b3db9243ba3b34c2b9b131bd8117943
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Apr 1 02:18:02 2015 -0400
+
+    removed freight config
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 916c3cbdd6cfc491ee801defa58fbc58a5e4c796
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Apr 1 02:14:18 2015 -0400
+
+    update freight config
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 409185416f27e679d606764ebda66bc14df44348
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Apr 1 02:03:56 2015 -0400
+
+    added freight config
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 4350acd0017da4bcb065541521d74221d626222d
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Mar 8 01:45:34 2015 -0500
+
+    update readme
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit cb717786f3873621604a99ff28be121a96aa7ded
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Mar 8 01:43:30 2015 -0500
+
+    re-org; remove demo_pq; use container for build
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 1cae414dfddf9475f9d7ebfeac90ed5ea16a6681
+Merge: 8692397 d9ce8fc
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Tue Feb 10 01:17:33 2015 -0500
+
+    merge master
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 8692397b82928f635e8fce4f65713249b52cbcc0
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Tue Feb 10 01:16:56 2015 -0500
+
+    listen by default
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit d9ce8fcd33da4cc9e998cf0efbbb38c3f3f3dbad
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Feb 4 04:47:07 2015 -0500
+
+    updated dockerfiles
+
+commit b1a90b96d25f400021f5630ebe7433f3161e46f5
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Feb 4 04:44:47 2015 -0500
+
+    add makefile
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 67288ec8f91c756450d4000065b6e412323405ea
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Feb 4 04:39:46 2015 -0500
+
+    rename pg demo dir
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 3b65d5e53514417b10f4cc1331bc85cc2aed9482
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sat Jan 31 23:41:22 2015 -0500
+
+    use static binary; switch to scratch base
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 8bcce6dac9342cdb63cafd893dd67dc3263297ab
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Thu Jan 29 10:56:31 2015 -0500
+
+    logging updates
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 5bab4b268ad875224fe810d855611255a7206d02
+Merge: ac3ae17 589b506
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Wed Jan 28 10:01:40 2015 -0500
+
+    Merge pull request #1 from mbentley/updates
+    
+    fig and compose updates
+
+commit 589b506b55c4601608a9bf64504d7d62bcec7912
+Author: Matt Bentley <mbentley@mbentley.net>
+Date:   Wed Jan 28 08:27:17 2015 -0500
+
+    set the host port for the app
+
+commit 5a0050008b44ff4db7a48ab4dd4470dfe1b928cf
+Author: Matt Bentley <mbentley@mbentley.net>
+Date:   Wed Jan 28 08:24:39 2015 -0500
+
+    added config for compose; updated fig config to point to a pg tag
+
+commit ac3ae176ecadc994026f7dce736da1f281816898
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Thu Jan 1 13:15:07 2015 -0500
+
+    split pq demo from static
+    
+    Signed-off-by: Evan Hazlett <ejhazlett@gmail.com>
+
+commit 43e70614b97bc3a38c88485ab369e7640ba04acd
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Tue Dec 2 08:53:13 2014 -0500
+
+    add smaller docker image
+
+commit fa784474892b6767198f74ecb0c5c3d3ab803c03
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Nov 30 22:51:33 2014 -0500
+
+    updated fig
+
+commit fc8b6fdc41a7d6a67ac497e239f5e032704b4d63
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Nov 30 22:37:20 2014 -0500
+
+    updated for fig
+
+commit bc504694eea45d8eb1d828eaac64da0e6cd49af7
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Nov 30 22:13:05 2014 -0500
+
+    show warn if unable to initdb
+
+commit 469bd46d3a2eda19fb3760a6ebfd0fffd298c0a8
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Nov 30 22:07:20 2014 -0500
+
+    added pg database example
+
+commit e92d01631efc3805f521e4093e7ce89d1fc1520e
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Nov 30 15:27:27 2014 -0500
+
+    re-organized repo
+
+commit ca4181aa9fd1b4f99a20240b7020110bc1bf6913
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Nov 30 15:12:36 2014 -0500
+
+    updated readme
+
+commit ccb1a1688af1c8186d084419808176b3c3b6940c
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Nov 30 15:12:02 2014 -0500
+
+    added readme
+
+commit b34d2d921e145f427d0ccf9b1196cf48a7bc4896
+Author: Evan Hazlett <ejhazlett@gmail.com>
+Date:   Sun Nov 30 15:10:32 2014 -0500
+
+    initial commit

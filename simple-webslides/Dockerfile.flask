@@ -1,0 +1,31 @@
+
+FROM python:alpine
+
+WORKDIR /src
+
+ADD . /src/
+# ADD app.py flask.sh requirements.txt /src/
+# ADD flask.templates                  /src/flask.templates/
+# ADD run.sh startup.sh static         /src/
+
+#CMD ["/bin/sh", "-c", "./startup.sh --rnd-image"]
+
+#WORKDIR /www
+#ADD requirements.txt app.py /www/
+#ADD static    /www/static
+#ADD templates /www/templates
+
+# Attention /usr/local/bin/python3 and /usr/bin/python3 are not the same !!
+# NOTE: pip3 is /usr/local/bin/pip3 (not /usr/bin/pip3)
+# NOTE: python3 is /usr/local/bin/python3 (not /usr/bin/python3)
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
+
+#RUN mkdir /tmp/flaskapp
+
+ARG CONTAINER_IMAGE
+ENV CONTAINER_IMAGE=$CONTAINER_IMAGE
+
+CMD ["/bin/sh", "-c", "set -x; sh -x ./flask.sh --ci $CONTAINER_IMAGE"]
+#CMD [ "/bin/sh", "-c", "while true ; do python3 -m py_compile app.py && python3 app.py; sleep 2; done" ]
+
+

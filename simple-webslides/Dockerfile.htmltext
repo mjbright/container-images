@@ -1,0 +1,14 @@
+
+FROM python:alpine
+
+WORKDIR /src
+
+ADD . /src/
+# ADD *.html *.html.templ              /src/
+# ADD run.sh startup.sh static         /src/
+
+ARG CONTAINER_IMAGE
+ENV CONTAINER_IMAGE=$CONTAINER_IMAGE
+
+CMD ["/bin/sh", "-c", "set -x; sh -x ./startup.sh --ci $CONTAINER_IMAGE"]
+
