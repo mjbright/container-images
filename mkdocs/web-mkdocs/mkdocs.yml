@@ -1,0 +1,6 @@
+#site_name: Terraform Azure Labs
+site_name: Terraform Intro Labs
+theme:
+  name: material
+  custom_dir: overrides
+
