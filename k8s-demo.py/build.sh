@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 IMAGE_BASE=mjbright/k8s-demo:py
-IMAGE=${IMAGE_BASE}0
+IMAGE=${IMAGE_BASE}
 
 BUILDER=docker
 #BUILDER=podman
@@ -72,13 +72,13 @@ CREATE_TMP_HTTPD_PY() {
     #read
 }
 
-BUILD_0() {
+BUILD_BASE() {
     C="blue"; ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png"
     CREATE_TMP_HTTPD_PY
     BUILD $IMAGE
 
-    RUN $BUILDER image tag $IMAGE ${IMAGE%0}
-    RUN PUSH ${IMAGE%0}
+    # RUN $BUILDER image tag $IMAGE ${IMAGE%0}
+    # RUN PUSH ${IMAGE%0}
 }
 
 BUILD_ALL() {
@@ -103,7 +103,7 @@ BUILD_ALL() {
         BUILD $IMAGE
     done
 
-    BUILD_0
+    BUILD_BASE
 }
 
 DELETE_ALL_IMAGES() {
@@ -112,7 +112,7 @@ DELETE_ALL_IMAGES() {
         RUN $BUILDER image remove $IMAGE
     done
 
-    IMAGE=${IMAGE_BASE}0;   RUN $BUILDER image remove $IMAGE
+    #IMAGE=${IMAGE_BASE};   RUN $BUILDER image remove $IMAGE
     IMAGE=${IMAGE_BASE};    RUN $BUILDER image remove $IMAGE
 
     #[ "$BUILDER" = "docker" ] && $BUILDER image prune
@@ -154,5 +154,5 @@ done
 
 ## Main: ----------------------------------------------------------------------
 
-BUILD_0
+BUILD_BASE
  
