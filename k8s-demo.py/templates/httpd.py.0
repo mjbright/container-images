@@ -3,9 +3,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import socket
 
-# from threading import Timer
 import time, os, sys
-import threading
 import traceback
 
 serverhost=socket.gethostname()
@@ -19,8 +17,6 @@ PNG="static/img/kubernetes_blue.png"
 IMAGE='UNSET'
 HOSTTYPE='UNSET'
 
-CONFIG={}
-
 STARTED=False
 LIVE=False
 READY=False
@@ -31,65 +27,11 @@ def gettimestr():
     # 2024-April-13 14:46:48
     return time.strftime('%Y-%B-%d %02H:%02M:%0S')
 
-def thread(delay):
-  global STARTED, LIVE, READY, CONFIG, START_TIME
-
-  while True:
-    time.sleep(1)
-    # sys.stdout.write(".")
-    delay = time.time() - START_TIME
-    now=gettimestr()
-
-    if not STARTED and "startup-delay" in CONFIG and delay > CONFIG["startup-delay"]:
-        MSG=f"[{now}] Startup phase completed"
-        print(MSG)
-        sys.stderr.write(f"{MSG}\n")
-        STARTED=True
-    if not LIVE and "liveness-delay" in CONFIG and delay > (CONFIG['liveness-delay'] + CONFIG['startup-delay']):
-        MSG=f"[{now}] Liveness phase completed"
-        print(MSG)
-        sys.stderr.write(f"{MSG}\n")
-        LIVE=True
-    if not READY and "readiness-delay" in CONFIG and delay > (CONFIG['readiness-delay'] + CONFIG['startup-delay']):
-        MSG=f"[{now}] Readiness phase completed"
-        print(MSG)
-        sys.stderr.write(f"{MSG}\n")
-        READY=True
-
 def readfile(path):
    return "".join( open(path).readlines() )
 
 def readfile_lines(path):
    return open(path).readlines()
-
-def read_config(config_file):
-    config_lines = readfile_lines(config_file)
-    config       = {}
-
-    MSG=f"Reading config from {config_file}"
-    print(MSG)
-    sys.stderr.write(f"{MSG}\n")
-
-    keys=["startup-delay", "liveness-delay", "readiness-delay"]
-    set_default_keys=["startup-delay", "liveness-delay", "readiness-delay"]
-
-    for line in config_lines:
-        for key in keys:
-            if line.find(f"{key}:") == 0:
-                #print(f"line={line}")
-                pos = line.find(":")
-                value = line[ line.find(":")+1 : ].lstrip().rstrip()
-                if "delay" in key:
-                    config[key]=int(value)
-                else:
-                    config[key]=value
-                print(f'Setting config[{key}]="{value}"')
-
-    for key in set_default_keys:
-        if not key in config: config[key]=0
-
-    #print(f"config={config}")
-    return config
 
 class WebServer(BaseHTTPRequestHandler):
 
@@ -100,10 +42,8 @@ class WebServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes(text, "utf8"))
 
     def do_GET(self):
-        global CONFIG, START_TIME
+        global START_TIME
         global RESP_200, RESP_503
-
-        #print(CONFIG)
 
         host = self.headers.get('Host')
         useragent = self.headers.get('User-Agent').lower()
@@ -145,52 +85,30 @@ http_requests_total{image='''+IMAGE+''',code="503"} '''+str(RESP_503)+'\n'
             self.send_header("Content-type", "text/plain")
             self.end_headers()
             content=f'''
-Time since start={ now_secs - START_TIME } secs\n", "utf8"))
-CONFIG={CONFIG}\n", "utf8"))
-200 responses={RESP_200} 503 responses={RESP_503}\n", "utf8"))
-STARTED={STARTED} LIVE={LIVE} READY={READY}\n", "utf8"))
+Time since start={ now_secs - START_TIME } secs
+200 responses={RESP_200} 503 responses={RESP_503}
 '''
             self.sendResponse(200, content, "text/plain")
             return
 
         if self.path == "/startz":
-            self.wfile.write(bytes("OK", "utf8"))
-            if 'startup-delay' in CONFIG and secs > CONFIG['startup-delay']:
-                RESP_200+=1
-                self.sendResponse(200, "OK\n", "text/plain")
-            else:
-                RESP_503+=1
-                self.sendResponse(503, "NOT Started\n", "text/plain")
+            RESP_200+=1
+            self.sendResponse(200, "OK\n", "text/plain")
             return
 
         if self.path == "/healthz":
-            if 'liveness-delay' in CONFIG and LIVE:
-                RESP_200+=1
-                self.sendResponse(200, "OK\n", "text/plain")
-            else:
-                RESP_503+=1
-                self.sendResponse(503, "NOT Healthy\n", "text/plain")
+            RESP_200+=1
+            self.sendResponse(200, "OK\n", "text/plain")
             return
 
         if self.path == "/readyz":
-            secs = START_TIME - time.time()
-            if 'readiness-delay' in CONFIG and READY:
-                RESP_200+=1
-                self.sendResponse(200, "OK\n", "text/plain")
-            else:
-                RESP_503+=1
-                self.sendResponse(503, "NOT Ready\n", "text/plain")
-            return
-
-        if not READY:
-            RESP_503+=1
-            self.sendResponse(503, "NOT Ready\n", "text/plain")
+            RESP_200+=1
+            self.sendResponse(200, "OK\n", "text/plain")
             return
 
         hosttype=HOSTTYPE
         imageinfo=IMAGE
         networkinfo=f"{serverhost}/{serverip}"
-
 
         sys.stderr.write(f'[{now}] [{networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
 
@@ -240,30 +158,6 @@ if __name__ == "__main__":
 
     START_TIME=time.time()
 
-    # NOTE: use of , in args, even when a single value:
-    threading.Thread(target=thread, args=(1.0,)).start()
-
-    '''
-    config_file=""
-    while len(CONFIG.keys()) == 0:
-    '''
-    # In container:
-    if os.path.exists(config_file):
-        CONFIG=read_config(config_file)
-    
-    # TESTING: If not in container:
-    elif os.path.exists(f"examples/{config_file}"):
-        CONFIG=read_config(f"examples/{config_file}")
-        config_file=f"examples/{config_file}"
-
-    '''
-    if len(CONFIG.keys()) == 0:
-        MSG="Waiting for config to appear at /etc/k8s-demo/config ..."
-        print(MSG)
-        sys.stderr.write(f"{MSG}\n")
-        time.sleep(2)
-    '''
-    
     webServer = HTTPServer((hostName, serverPort), WebServer)
     now=gettimestr()
     sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server started - listening on http://{hostName}:{serverPort}\n")
