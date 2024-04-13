@@ -1,8 +1,8 @@
 
 IMG=mjbright/httpd:py
 
-#BUILDER=docker
-BUILDER=podman
+BUILDER=docker
+#BUILDER=podman
 
 PRESS() {
     echo; echo "-- $*"
