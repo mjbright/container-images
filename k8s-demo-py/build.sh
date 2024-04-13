@@ -1,10 +1,14 @@
+#!/usr/bin/env bash
 
-IMG=mjbright/k8s-demo:py0
+IMAGE_BASE=mjbright/k8s-demo:py
+IMAGE=${IMAGE_BASE}0
 
 BUILDER=docker
 #BUILDER=podman
 
 PROMPTS=1
+
+## Func: ----------------------------------------------------------------------
 
 die() { echo "$0: die - $*" >&2; exit 1; }
 
@@ -25,66 +29,101 @@ RUN() {
 }
 
 BUILD() {
-    IMG=$1; shift
+    IMAGE=$1; shift
 
     if [ "$BUILDER" = "docker" ]; then
-        RUN docker build -t $IMG . --progress plain
+        RUN docker build -t $IMAGE . --progress plain
         RUN docker login
-        RUN docker push $IMG
+        RUN docker push $IMAGE
     else
-        RUN podman build -t $IMG .
+        RUN podman build -t $IMAGE .
         RUN podman login
-        RUN podman push $IMG
+        RUN podman push $IMAGE
     fi
 }
 
 CREATE_TMP_HTTPD_PY() {
+    # set -x
     sed templates/httpd.py.0 \
             -e "s?^ASCIITEXT=.*?ASCIITEXT=\"$ASCIITEXT\"?" \
-            -e "s?^PNG=.*?PNG=\"$PNG\"?" \
+            -e "s?^PNG=.*?PNG=\"$PNG\"?"                   \
+            -e "s?^IMAGE=.*?IMAGE=\"$IMAGE\"?"             \
             > tmp/httpd.py
+    # set +x
 
-    ls -al tmp/httpd.py
+    chmod +x tmp/httpd.py
+    ls   -al tmp/httpd.py
     [ ! -s tmp/httpd.py ] && die "sed failed when creating tmp/httpd.py"
     #exit
 
     CMD="diff templates/httpd.py.0 tmp/httpd.py"
     echo; echo "-- $CMD"; $CMD
+    #read
+}
+
+BUILD_0() {
+    C="blue"; ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png"
+    CREATE_TMP_HTTPD_PY
+    BUILD $IMAGE
+    RUN $BUILDER image tag $IMAGE ${IMAGE%0}
+    RUN $BUILDER push ${IMAGE%0}
 }
 
 BUILD_ALL() {
+    local C
+
     for IDX in {1..6}; do
-        IMG=mjbright/k8s-demo:py${IDX}
-        echo; echo "==== Building image $IMG"
+        IMAGE=mjbright/k8s-demo:py${IDX}
+        echo; echo "==== Building image $IMAGE"
 
         case $IDX in
-            *) local C="blue"; ASCIITEXT=f"static/img/kubernetes_${C}.txt"; PNG=f"static/img/kubernetes_${C}.png";;
-            2) local C="green"; ASCIITEXT=f"static/img/kubernetes_${C}.txt"; PNG=f"static/img/kubernetes_${C}.png";;
-            3) local C="red"; ASCIITEXT=f"static/img/kubernetes_${C}.txt"; PNG=f"static/img/kubernetes_${C}.png";;
-            4) local C="cyan"; ASCIITEXT=f"static/img/kubernetes_${C}.txt"; PNG=f"static/img/kubernetes_${C}.png";;
-            5) local C="yellow"; ASCIITEXT=f"static/img/kubernetes_${C}.txt"; PNG=f"static/img/kubernetes_${C}.png";;
-            6) local C="white"; ASCIITEXT=f"static/img/kubernetes_${C}.txt"; PNG=f"static/img/kubernetes_${C}.png";;
+            2) C="green";  ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png";;
+            3) C="red";    ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png";;
+            4) C="cyan";   ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png";;
+            5) C="yellow"; ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png";;
+            6) C="white";  ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png";;
+            *) C="blue";   ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png";;
         esac
 
+        #echo "IDX=$IDX IMAGE=$IMAGE C=$C ASCIITEXT=$ASCIITEXT PNG=$PNG"
         CREATE_TMP_HTTPD_PY
-        echo "-- BUILD $IMG"
-        BUILD $IMG
+        echo "-- BUILD $IMAGE"
+        BUILD $IMAGE
     done
+
+    BUILD_0
 }
 
-if [ "$1" = "-a" ]; then
-    PROMPTS=0
-    BUILD_ALL
-    exit
-fi
+DELETE_ALL_IMAGES() {
+    for IDX in {1..6}; do
+        IMAGE=${IMAGE_BASE}${IDX}
+        RUN $BUILDER image remove $IMAGE
+    done
 
-if [ "$1" = "-p" ]; then
-    set -x; docker push $IMG; set +x
-    exit
-fi
+    IMAGE=${IMAGE_BASE}0;   RUN $BUILDER image remove $IMAGE
+    IMAGE=${IMAGE_BASE};    RUN $BUILDER image remove $IMAGE
+
+    #[ "$BUILDER" = "docker" ] && $BUILDER image prune
+    RUN $BUILDER image prune -f
+    RUN $BUILDER image ls
+}
+
+## Args: ----------------------------------------------------------------------
+
+while [ $# -ne 0 ]; do
+    case $1 in
+        -rmi) PROMPTS=0; DELETE_ALL_IMAGES; exit $?;;
+        -a)   PROMPTS=0; BUILD_ALL; exit $?;;
+
+        -p)   set -x; docker push $IMAGE; set +x; exit;;
+
+         *) die "Unknown option '$1'";;
+    esac
+    shift
+done
 
 
-C="blue"; ASCIITEXT=f"static/img/kubernetes_${C}.txt"; PNG=f"static/img/kubernetes_${C}.png"
-CREATE_TMP_HTTPD_PY
-BUILD $IMG
+## Main: ----------------------------------------------------------------------
+
+BUILD_0
  

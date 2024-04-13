@@ -36,7 +36,8 @@ class WebServer(BaseHTTPRequestHandler):
 
         t=time.strftime('%l:%M%p %Z on %b %d, %Y') 
         #print(f'[{t}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
-        sys.stderr.write(f'[{t}] [{hosttype} {networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
+        #sys.stderr.write(f'[{t}] [{hosttype} {networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
+        sys.stderr.write(f'[{t}] [{networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
 
         content=""
         if "curl" in useragent or "http" in useragent or "wget" in useragent:
