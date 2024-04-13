@@ -41,15 +41,20 @@ def thread(delay):
     now=gettimestr()
 
     if not STARTED and "startup-delay" in CONFIG and delay > CONFIG["startup-delay"]:
-        print(f"[{now}] Startup phase completed")
+        MSG=f"[{now}] Startup phase completed"
+        print(MSG)
+        sys.stderr.write(f"{MSG}\n")
         STARTED=True
     if not LIVE and "liveness-delay" in CONFIG and delay > (CONFIG['liveness-delay'] + CONFIG['startup-delay']):
-        print(f"[{now}] Liveness phase completed")
+        MSG=f"[{now}] Liveness phase completed"
+        print(MSG)
+        sys.stderr.write(f"{MSG}\n")
         LIVE=True
     if not READY and "readiness-delay" in CONFIG and delay > (CONFIG['readiness-delay'] + CONFIG['startup-delay']):
-        print(f"[{now}] Readiness phase completed")
+        MSG=f"[{now}] Readiness phase completed"
+        print(MSG)
+        sys.stderr.write(f"{MSG}\n")
         READY=True
-
 
 def readfile(path):
    return "".join( open(path).readlines() )
@@ -61,7 +66,9 @@ def read_config(config_file):
     config_lines = readfile_lines(config_file)
     config       = {}
 
-    print(f"Reading config from {config_file}")
+    MSG=f"Reading config from {config_file}"
+    print(MSG)
+    sys.stderr.write(f"{MSG}\n")
 
     keys=["startup-delay", "liveness-delay", "readiness-delay"]
     set_default_keys=["startup-delay", "liveness-delay", "readiness-delay"]
@@ -81,15 +88,16 @@ def read_config(config_file):
     for key in set_default_keys:
         if not key in config: config[key]=0
 
-    print(f"config={config}")
+    #print(f"config={config}")
     return config
+
 
 class WebServer(BaseHTTPRequestHandler):
 
     def do_GET(self):
         global CONFIG, START_TIME
 
-        print(CONFIG)
+        #print(CONFIG)
 
         host = self.headers.get('Host')
         useragent = self.headers.get('User-Agent').lower()
@@ -207,14 +215,25 @@ if __name__ == "__main__":
     # NOTE: use of , in args, even when a single value:
     threading.Thread(target=thread, args=(1.0,)).start()
 
-    # In container:
-    if os.path.exists("/etc/k8s-demo/config"):
-        CONFIG=read_config("/etc/k8s-demo/config")
+    config_file=""
+    while len(CONFIG.keys()) == 0:
+        # In container:
+        if os.path.exists("/etc/k8s-demo/config"):
+            CONFIG=read_config("/etc/k8s-demo/config")
+            config_file="/etc/k8s-demo/config"
     
-    # TESTING: If not in container:
-    if os.path.exists("examples/etc/k8s-demo/config"):
-        CONFIG=read_config("examples/etc/k8s-demo/config")
+        # TESTING: If not in container:
+        if os.path.exists("examples/etc/k8s-demo/config"):
+            CONFIG=read_config("examples/etc/k8s-demo/config")
+            config_file="examples/etc/k8s-demo/config"
+
+        if len(CONFIG.keys()) == 0:
+            MSG="Waiting for config to appear at /etc/k8s-demo/config ..."
+            print(MSG)
+            sys.stderr.write(f"{MSG}\n")
+            time.sleep(2)
     
+    #print(f"Read config from {config_file}")
     webServer = HTTPServer((hostName, serverPort), WebServer)
     now=gettimestr()
     sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server started - listening on http://{hostName}:{serverPort}\n")
