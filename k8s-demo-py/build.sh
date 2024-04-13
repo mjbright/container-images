@@ -6,6 +6,9 @@ IMAGE=${IMAGE_BASE}0
 BUILDER=docker
 #BUILDER=podman
 
+LOGGEDIN=0
+PUSH="registry"
+
 PROMPTS=1
 
 ## Func: ----------------------------------------------------------------------
@@ -28,17 +31,25 @@ RUN() {
     $*
 }
 
+LOGIN() {
+    [ $LOGGEDIN -ne 0 ] && return
+
+    RUN $BUILDER login
+    LOGGEDIN=1
+}
+
 BUILD() {
     IMAGE=$1; shift
 
+    [ "$PUSH" = "registry" ] && LOGIN
+
     if [ "$BUILDER" = "docker" ]; then
         RUN docker build -t $IMAGE . --progress plain
-        RUN docker login
-        RUN docker push $IMAGE
+        RUN PUSH $IMAGE
     else
         RUN podman build -t $IMAGE .
         RUN podman login
-        RUN podman push $IMAGE
+        RUN PUSH $IMAGE
     fi
 }
 
@@ -65,8 +76,9 @@ BUILD_0() {
     C="blue"; ASCIITEXT="static/img/kubernetes_${C}.txt"; PNG="static/img/kubernetes_${C}.png"
     CREATE_TMP_HTTPD_PY
     BUILD $IMAGE
+
     RUN $BUILDER image tag $IMAGE ${IMAGE%0}
-    RUN $BUILDER push ${IMAGE%0}
+    RUN PUSH ${IMAGE%0}
 }
 
 BUILD_ALL() {
@@ -108,14 +120,29 @@ DELETE_ALL_IMAGES() {
     RUN $BUILDER image ls
 }
 
+PUSH() {
+    IMAGE=$1
+
+    case $PUSH in
+         registry)    $BUILDER push $IMAGE;;
+
+         nerdctl)     echo "Images are large[1 GBy], save/load will take time ..."; set -x; $BUILDER image save $IMAGE | sudo nerdctl -n k8s.io image load; set +x;;
+
+         *) die "Unknown 'image push' option '$PUSH'";;
+    esac
+}
+
 ## Args: ----------------------------------------------------------------------
 
 while [ $# -ne 0 ]; do
     case $1 in
+        # Push images to containerd/k8s.io namespace on local node:
+        -lp|--local-push) PUSH="nerdctl";;
+
         -rmi) PROMPTS=0; DELETE_ALL_IMAGES; exit $?;;
         -a)   PROMPTS=0; BUILD_ALL; exit $?;;
 
-        -p)   set -x; docker push $IMAGE; set +x; exit;;
+        -p)   set -x; PUSH $IMAGE; set +x; exit;;
 
          *) die "Unknown option '$1'";;
     esac
