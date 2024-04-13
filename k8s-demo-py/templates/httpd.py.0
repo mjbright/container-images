@@ -12,8 +12,10 @@ serverip=socket.gethostbyname(socket.gethostname())
 hostName   = "0.0.0.0"
 serverPort = 8080
 
-ASCIITEXT=f"static/img/kubernetes_blue.txt"
-PNG=f"static/img/kubernetes_blue.png"
+#ASCIITEXT=f"static/img/kubernetes_blue.txt"
+#PNG=f"static/img/kubernetes_blue.png"
+ASCIITEXT="static/img/kubernetes_blue.txt"
+PNG="static/img/kubernetes_blue.png"
 IMAGE='UNSET'
 HOSTTYPE='UNSET'
 
