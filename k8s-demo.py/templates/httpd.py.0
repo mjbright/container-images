@@ -91,11 +91,17 @@ def read_config(config_file):
     #print(f"config={config}")
     return config
 
-
 class WebServer(BaseHTTPRequestHandler):
+
+    def sendResponse(self, code, text, mimetype):
+        self.send_response(code)
+        self.send_header("Content-type", mimetype)
+        self.end_headers()
+        self.wfile.write(bytes(text, "utf8"))
 
     def do_GET(self):
         global CONFIG, START_TIME
+        global RESP_200, RESP_503
 
         #print(CONFIG)
 
@@ -109,86 +115,99 @@ class WebServer(BaseHTTPRequestHandler):
         #print(f'[{now}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
         #sys.stderr.write(f'[{now}] [{hosttype} {networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
 
-        if self.path == "/status":
-            self.send_response(200)
-            self.send_header("Content-type", "text/html")
-            self.end_headers()
-            self.wfile.write(bytes(f"Time since start={ now_secs - START_TIME } secs\n", "utf8"))
+        if self.path == "/metrics":
+            metrics='''
+# HELP http_requests_total The total number of HTTP requests.
+# TYPE http_requests_total counter
+http_requests_total{image='''+IMAGE+''',code="200"} '''+str(RESP_200)+'''
+http_requests_total{image='''+IMAGE+''',code="503"} '''+str(RESP_503)+'\n'
+             ## # HELP http_requests_total The total number of HTTP requests.
+             ## # TYPE http_requests_total counter
+             ## http_requests_total\{image={IMAGE},code="200"\} {RESP_200}
+             ## http_requests_total\{image={IMAGE},code="503"\} {RESP_503}
+            self.sendResponse(200, metrics, "text/plain")
+            return
+        
+        # # Escaping in label values:
+        # msdos_file_access_time_seconds\{version={version}} 
+        # 
+        # # Minimalistic line:
+        # metric_without_timestamp_and_labels 12.47
 
-            self.wfile.write(bytes(f"CONFIG={CONFIG}\n", "utf8"))
-            self.wfile.write(bytes(f"STARTED={STARTED} LIVE={LIVE} READY={READY}\n", "utf8"))
+        if self.path == "/reset":
+            self.sendResponse(200, "OK\n", "text/plain")
+            sys.exit(1)
+            return
+
+        if self.path == "/status":
+            #RESP_200+=1
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            content=f'''
+Time since start={ now_secs - START_TIME } secs\n", "utf8"))
+CONFIG={CONFIG}\n", "utf8"))
+200 responses={RESP_200} 503 responses={RESP_503}\n", "utf8"))
+STARTED={STARTED} LIVE={LIVE} READY={READY}\n", "utf8"))
+'''
+            self.sendResponse(200, content, "text/plain")
             return
 
         if self.path == "/startz":
             self.wfile.write(bytes("OK", "utf8"))
             if 'startup-delay' in CONFIG and secs > CONFIG['startup-delay']:
-                self.send_response(200)
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(bytes("OK", "utf8"))
+                RESP_200+=1
+                self.sendResponse(200, "OK\n", "text/plain")
             else:
-                self.send_response(503)
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(bytes("NOT Started", "utf8"))
-                #self.send_error(500,traceback.format_exc())
+                RESP_503+=1
+                self.sendResponse(503, "NOT Started\n", "text/plain")
             return
 
         if self.path == "/healthz":
             if 'liveness-delay' in CONFIG and LIVE:
-                self.send_response(200)
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(bytes("OK", "utf8"))
+                RESP_200+=1
+                self.sendResponse(200, "OK\n", "text/plain")
             else:
-                self.send_response(503)
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(bytes("NOT Healthy", "utf8"))
-                #self.send_error(500,traceback.format_exc())
+                RESP_503+=1
+                self.sendResponse(503, "NOT Healthy\n", "text/plain")
             return
 
         if self.path == "/readyz":
             secs = START_TIME - time.time()
             if 'readiness-delay' in CONFIG and READY:
-                self.send_response(200)
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(bytes("OK", "utf8"))
+                RESP_200+=1
+                self.sendResponse(200, "OK\n", "text/plain")
             else:
-                self.send_response(503)
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(bytes("NOT Ready", "utf8"))
-                #self.send_error(500,traceback.format_exc())
+                RESP_503+=1
+                self.sendResponse(503, "NOT Ready\n", "text/plain")
             return
 
         if not READY:
-            self.send_response(503)
-            self.send_header("Content-type", "text/html")
-            self.end_headers()
-            self.wfile.write(bytes("NOT Ready", "utf8"))
+            RESP_503+=1
+            self.sendResponse(503, "NOT Ready\n", "text/plain")
             return
 
         hosttype=HOSTTYPE
         imageinfo=IMAGE
         networkinfo=f"{serverhost}/{serverip}"
 
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
 
         sys.stderr.write(f'[{now}] [{networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
 
         content=""
         if "curl" in useragent or "http" in useragent or "wget" in useragent:
+            RESP_200+=1
+
             if self.path != "/1":
                 if os.path.isfile(ASCIITEXT):
                     content = readfile(ASCIITEXT)
                 else:
                     content = f'[wd={ os.getcwd() }] No such file as { ASCIITEXT } - '
             content+=f"[{hosttype} {networkinfo}] {imageinfo} - Request from { host }\n"
+            self.sendResponse(200, content, "text/plain")
         else:
+            RESP_200+=1
+
             template_values = {
                 'host': host,
                 'PNG':  PNG,
@@ -205,35 +224,46 @@ class WebServer(BaseHTTPRequestHandler):
     <p>[wd={ os.getcwd() }] No such file as { ASCIITEXT }</p>
 </body></html>
 '''
-
-        self.wfile.write(bytes(content, "utf8"))
-
+            self.sendResponse(200, content, "text/html")
 
 if __name__ == "__main__":        
+    a = 1
+    config_file="/etc/k8s-demo/config"
+
+    RESP_200=0
+    RESP_503=0
+
+    while a < len(sys.argv):
+        if sys.argv[a] == "-c":
+            a+=1
+            config_file=sys.argv[a]
+
     START_TIME=time.time()
 
     # NOTE: use of , in args, even when a single value:
     threading.Thread(target=thread, args=(1.0,)).start()
 
+    '''
     config_file=""
     while len(CONFIG.keys()) == 0:
-        # In container:
-        if os.path.exists("/etc/k8s-demo/config"):
-            CONFIG=read_config("/etc/k8s-demo/config")
-            config_file="/etc/k8s-demo/config"
+    '''
+    # In container:
+    if os.path.exists(config_file):
+        CONFIG=read_config(config_file)
     
-        # TESTING: If not in container:
-        if os.path.exists("examples/etc/k8s-demo/config"):
-            CONFIG=read_config("examples/etc/k8s-demo/config")
-            config_file="examples/etc/k8s-demo/config"
+    # TESTING: If not in container:
+    elif os.path.exists(f"examples/{config_file}"):
+        CONFIG=read_config(f"examples/{config_file}")
+        config_file=f"examples/{config_file}"
 
-        if len(CONFIG.keys()) == 0:
-            MSG="Waiting for config to appear at /etc/k8s-demo/config ..."
-            print(MSG)
-            sys.stderr.write(f"{MSG}\n")
-            time.sleep(2)
+    '''
+    if len(CONFIG.keys()) == 0:
+        MSG="Waiting for config to appear at /etc/k8s-demo/config ..."
+        print(MSG)
+        sys.stderr.write(f"{MSG}\n")
+        time.sleep(2)
+    '''
     
-    #print(f"Read config from {config_file}")
     webServer = HTTPServer((hostName, serverPort), WebServer)
     now=gettimestr()
     sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server started - listening on http://{hostName}:{serverPort}\n")
