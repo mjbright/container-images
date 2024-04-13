@@ -139,6 +139,8 @@ while [ $# -ne 0 ]; do
         # Push images to containerd/k8s.io namespace on local node:
         -lp|--local-push) PUSH="nerdctl";;
 
+        -np|--no-prompts) PROMPTS=0;;
+
         -rmi) PROMPTS=0; DELETE_ALL_IMAGES; exit $?;;
         -a)   PROMPTS=0; BUILD_ALL; exit $?;;
 
