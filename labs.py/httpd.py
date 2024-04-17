@@ -150,12 +150,16 @@ CONFIG={CONFIG}
 200 responses={RESP_200} 503 responses={RESP_503}
 STARTED={STARTED} LIVE={LIVE} READY={READY}
 '''
+            if not STARTED: content += f'Starting in { CONFIG["startup-delay"] - delay } secs\n'
+            if not LIVE:    content += f'Live     in { CONFIG["liveness-delay"] - delay } secs\n'
+            if not READY:   content += f'Ready    in { CONFIG["readiness-delay"] - delay } secs\n'
+
             self.sendResponse(200, content, "text/plain")
             return
 
         if self.path == "/startz":
-            self.wfile.write(bytes("OK", "utf8"))
-            if 'startup-delay' in CONFIG and secs > CONFIG['startup-delay']:
+            #self.wfile.write(bytes("OK", "utf8"))
+            if STARTED:
                 RESP_200+=1
                 self.sendResponse(200, "OK\n", "text/plain")
             else:
@@ -164,7 +168,7 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
             return
 
         if self.path == "/healthz":
-            if 'liveness-delay' in CONFIG and LIVE:
+            if LIVE:
                 RESP_200+=1
                 self.sendResponse(200, "OK\n", "text/plain")
             else:
@@ -173,8 +177,7 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
             return
 
         if self.path == "/readyz":
-            secs = START_TIME - time.time()
-            if 'readiness-delay' in CONFIG and READY:
+            if READY:
                 RESP_200+=1
                 self.sendResponse(200, "OK\n", "text/plain")
             else:
@@ -190,7 +193,6 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
         hosttype=HOSTTYPE
         imageinfo=IMAGE
         networkinfo=f"{serverhost}/{serverip}"
-
 
         sys.stderr.write(f'[{now}] [{networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
 

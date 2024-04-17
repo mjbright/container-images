@@ -48,7 +48,7 @@ BUILD() {
         RUN PUSH $IMAGE
     else
         RUN podman build -t $IMAGE .
-        RUN podman login
+        #RUN podman login
         RUN PUSH $IMAGE
     fi
 }
@@ -125,11 +125,15 @@ PUSH() {
     IMAGE=$1
 
     case $PUSH in
-         registry)    $BUILDER push $IMAGE;;
+         registry) $BUILDER push $IMAGE;;
 
-         nerdctl)     echo "Images are large[1 GBy], save/load will take time ..."; set -x; $BUILDER image save $IMAGE | sudo nerdctl -n k8s.io image load; set +x;;
+         nerdctl)  echo "Images are large[300 MBy], save/load will take time ...";
+                   set -x;
+                     $BUILDER image save $IMAGE | sudo nerdctl -n k8s.io image load
+                     $BUILDER image save $IMAGE | ssh worker sudo nerdctl -n k8s.io image load
+                   set +x;;
 
-         *) die "Unknown 'image push' option '$PUSH'";;
+         *)        die "Unknown 'image push' option '$PUSH'";;
     esac
 }
 
