@@ -134,12 +134,18 @@ PUSH() {
 
 ## Args: ----------------------------------------------------------------------
 
+which docker && BUILDER=docker ||
+    which podman && BUILDER=podman
+
 while [ $# -ne 0 ]; do
     case $1 in
         # Push images to containerd/k8s.io namespace on local node:
         -lp|--local-push) PUSH="nerdctl";;
 
         -np|--no-prompts) PROMPTS=0;;
+
+        -d|--docker) BUILDER=docker;;
+        -P|--podman) BUILDER=podman;;
 
         -rmi) PROMPTS=0; DELETE_ALL_IMAGES; exit $?;;
         -a)   PROMPTS=0; BUILD_ALL; exit $?;;
@@ -153,6 +159,11 @@ done
 
 
 ## Main: ----------------------------------------------------------------------
+
+cd $( dirname $0 )
+mkdir -p tmp
+
+echo "Using $BUILDER:"
 
 BUILD_BASE
  
