@@ -125,7 +125,11 @@ PUSH() {
     IMAGE=$1
 
     case $PUSH in
-         registry) $BUILDER push $IMAGE;;
+         registry) $BUILDER push $IMAGE
+           IMAGE_ID_DIGEST=$( podman inspect $IMAGE | jq -rc '.[0] | { Id, Digest }' )
+           echo $(date) [$(hostname -A)]: $IMAGE_ID_DIGEST >> .build.history
+           tail -1 .build.history
+           ;;
 
          nerdctl)  echo "Images are large[300 MBy], save/load will take time ...";
                    set -x;
