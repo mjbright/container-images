@@ -240,7 +240,7 @@ if __name__ == "__main__":
     RESP_503=0
 
     a = 1
-    if a < len(sys.argv): print(f"Reading { len(sys.argv) -1 cli arguments")
+    if a < len(sys.argv): print(f"Reading { len(sys.argv) - 1 } cli arguments")
     while a < len(sys.argv):
         if sys.argv[a] == "-p" or sys.argv[a] == "--port":
             a+=1
