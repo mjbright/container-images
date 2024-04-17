@@ -231,6 +231,8 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
             self.sendResponse(200, content, "text/html")
 
 if __name__ == "__main__":        
+    GLOBAL serverPort
+
     a = 1
     config_file="/etc/k8s-demo/config"
     CONFIG={}
@@ -239,6 +241,9 @@ if __name__ == "__main__":
     RESP_503=0
 
     while a < len(sys.argv):
+        if sys.argv[a] == "-p":
+            a+=1
+            serverPort=int(sys.argv[a])
         if sys.argv[a] == "-c":
             a+=1
             config_file=sys.argv[a]
