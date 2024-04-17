@@ -33,6 +33,7 @@ def gettimestr():
 
 def thread(delay):
   global STARTED, LIVE, READY, CONFIG, START_TIME
+  global hostName, serverPort
 
   while True:
     time.sleep(1)
@@ -55,6 +56,7 @@ def thread(delay):
         print(MSG)
         sys.stderr.write(f"{MSG}\n")
         READY=True
+        sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server started - listening on http://{hostName}:{serverPort}\n")
 
 def readfile(path):
    return "".join( open(path).readlines() )
@@ -193,7 +195,6 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
         hosttype=HOSTTYPE
         imageinfo=IMAGE
         networkinfo=f"{serverhost}/{serverip}"
-
         sys.stderr.write(f'[{now}] [{networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
 
         content=""
@@ -231,6 +232,7 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
 if __name__ == "__main__":        
     a = 1
     config_file="/etc/k8s-demo/config"
+    CONFIG={}
 
     RESP_200=0
     RESP_503=0
@@ -239,6 +241,15 @@ if __name__ == "__main__":
         if sys.argv[a] == "-c":
             a+=1
             config_file=sys.argv[a]
+        if sys.argv[a] == "-sd" or sys.argv[a] == "--startup-delay":
+            a+=1;
+            CONFIG['startup-delay']=int(sys.argv[a])
+        if sys.argv[a] == "-ld" or sys.argv[a] == "--liveness-delay":
+            a+=1;
+            CONFIG['liveness-delay']=int(sys.argv[a])
+        if sys.argv[a] == "-rd" or sys.argv[a] == "--readiness-delay":
+            a+=1;
+            CONFIG['readiness-delay']=int(sys.argv[a])
 
     START_TIME=time.time()
 
@@ -256,7 +267,11 @@ if __name__ == "__main__":
 
     webServer = HTTPServer((hostName, serverPort), WebServer)
     now=gettimestr()
-    sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server started - listening on http://{hostName}:{serverPort}\n")
+    sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server starting ...\n")
+
+    if             not "startup-delay"   in CONFIG: STARTED=True
+    if STARTED and not "liveness-delay"  in CONFIG: LIVE=True
+    if LIVE    and not "readiness-delay" in CONFIG: READY=True
 
     try:
         webServer.serve_forever()
