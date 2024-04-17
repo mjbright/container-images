@@ -11,6 +11,7 @@ Merge in kubeview - or just reuse container build (kubeapi-proxy, or K8SPythonCL
 
 Missing files to be added, licenses ok?
 
+
 Changes not staged for commit:
   (use "git add/rm <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
@@ -29,9 +30,6 @@ Changes not staged for commit:
 	deleted:    labs.py/static/font/LigatureSymbols-2.11.eot
 	deleted:    labs.py/static/font/LigatureSymbols-2.11.svg
 	deleted:    labs.py/static/font/LigatureSymbols-2.11.ttf
-	deleted:    mkdocs.py/UNUSED/static/font/LigatureSymbols-2.11.eot
-	deleted:    mkdocs.py/UNUSED/static/font/LigatureSymbols-2.11.svg
-	deleted:    mkdocs.py/UNUSED/static/font/LigatureSymbols-2.11.ttf
 	deleted:    simple-webslides.py/static/css/webslides.css
 	deleted:    simple-webslides.py/static/images/city.jpg
 	deleted:    simple-webslides.py/static/images/city_small.jpg
@@ -47,3 +45,4 @@ Changes not staged for commit:
 	deleted:    simple-webslides.py/static/images/park_small_dark.jpg
 	deleted:    simple-webslides.py/static/js/webslides.js
 
+no changes added to commit (use "git add" and/or "git commit -a")
