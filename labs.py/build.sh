@@ -55,7 +55,8 @@ BUILD() {
 
 CREATE_TMP_HTTPD_PY() {
     # set -x
-    sed templates/httpd.py.0 \
+    # httpd.py is the template for generating tmp/httpd.py which is builtin into the image
+    sed httpd.py \
             -e "s?^ASCIITEXT=.*?ASCIITEXT=\"$ASCIITEXT\"?" \
             -e "s?^PNG=.*?PNG=\"$PNG\"?"                   \
             -e "s?^IMAGE=.*?IMAGE=\"$IMAGE\"?"             \
@@ -67,7 +68,7 @@ CREATE_TMP_HTTPD_PY() {
     [ ! -s tmp/httpd.py ] && die "sed failed when creating tmp/httpd.py"
     #exit
 
-    CMD="diff templates/httpd.py.0 tmp/httpd.py"
+    CMD="diff httpd.py tmp/httpd.py"
     echo; echo "-- $CMD"; $CMD
     #read
 }

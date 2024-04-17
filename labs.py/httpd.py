@@ -243,10 +243,6 @@ if __name__ == "__main__":
     # NOTE: use of , in args, even when a single value:
     threading.Thread(target=thread, args=(1.0,)).start()
 
-    '''
-    config_file=""
-    while len(CONFIG.keys()) == 0:
-    '''
     # In container:
     if os.path.exists(config_file):
         CONFIG=read_config(config_file)
@@ -256,14 +252,6 @@ if __name__ == "__main__":
         CONFIG=read_config(f"examples/{config_file}")
         config_file=f"examples/{config_file}"
 
-    '''
-    if len(CONFIG.keys()) == 0:
-        MSG="Waiting for config to appear at /etc/k8s-demo/config ..."
-        print(MSG)
-        sys.stderr.write(f"{MSG}\n")
-        time.sleep(2)
-    '''
-    
     webServer = HTTPServer((hostName, serverPort), WebServer)
     now=gettimestr()
     sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server started - listening on http://{hostName}:{serverPort}\n")

@@ -1,0 +1,1 @@
+0.1: initial image - includes reading from config file if present to determine delays on startup/liveness/readiness
