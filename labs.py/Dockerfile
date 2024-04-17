@@ -2,6 +2,8 @@
 #FROM python:3
 FROM python:3.11-slim-bookworm
 
+RUN apt-get update && apt-get install -y wget curl net-tools && apt-get clean
+
 WORKDIR /app
 
 # Note: ADD is like COPY but has more (unnecessary) functionality:

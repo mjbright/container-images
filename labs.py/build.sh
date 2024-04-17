@@ -44,10 +44,12 @@ BUILD() {
     [ "$PUSH" = "registry" ] && LOGIN
 
     if [ "$BUILDER" = "docker" ]; then
-        RUN docker build -t $IMAGE . --progress plain
+        RUN docker build -t $IMAGE . --progress plain ||
+            die "Build failed ..."
         RUN PUSH $IMAGE
     else
-        RUN podman build -t $IMAGE .
+        RUN podman build -t $IMAGE . ||
+            die "Build failed ..."
         #RUN podman login
         RUN PUSH $IMAGE
     fi
