@@ -33,25 +33,25 @@ spec:
       initContainers:
       - name:  init-1
         image: alpine
-        command: ['/bin/sh', '-c', 'echo "Starting init-1 ..."; /bin/sleep 3; echo "DONE"']
+        command: ['/bin/sh', '-c', 'echo "Starting init-1 ... sleeping"; /bin/sleep 3; echo "DONE"']
       - name:  init-2
         image: alpine
-        command: ['/bin/sh', '-c', 'echo "Starting init-2 ..."; /bin/sleep 3; echo "DONE"']
+        command: ['/bin/sh', '-c', 'echo "Starting init-2 ... sleeping"; /bin/sleep 3; echo "DONE"']
       - name:  init-3
         image: alpine
-        command: ['/bin/sh', '-c', 'echo "Starting init-3 ..."; /bin/sleep 3; echo "DONE"']
+        command: ['/bin/sh', '-c', 'echo "Starting init-3 ... sleeping"; /bin/sleep 3; echo "DONE"']
       - name:  init-4
         image: alpine
-        command: ['/bin/sh', '-c', 'echo "Starting init-4 ..."; /bin/sleep 3; echo "DONE"']
+        command: ['/bin/sh', '-c', 'echo "Starting init-4 ... sleeping"; /bin/sleep 3; echo "DONE"']
 
       containers:
       - image: mjbright/labs:py
         # Always pull image from the docker hub, as this image frequently changes:
         imagePullPolicy: Always
         name: k8s-demo
-        command: ['/bin/sh', '-c', 'echo "Starting k8s-demo ..."; /app/httpd.py; echo "NEVER DONE"']
+        command: ['/bin/sh', '-c', 'echo "Starting k8s-demo ... web serving"; /app/httpd.py; echo "NEVER DONE"']
 
       - image: alpine
         name: sleeper
-        command: ['/bin/sh', '-c', 'echo "Starting sleep ..."; /bin/sleep infinity; echo "NEVER DONE"']
+        command: ['/bin/sh', '-c', 'echo "Starting sleep ... sleeping forever"; /bin/sleep infinity; echo "NEVER DONE"']
 
