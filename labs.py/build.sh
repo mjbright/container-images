@@ -41,8 +41,6 @@ LOGIN() {
 BUILD() {
     IMAGE=$1; shift
 
-    [ "$PUSH" = "registry" ] && LOGIN
-
     if [ "$BUILDER" = "docker" ]; then
         RUN docker build -t $IMAGE . --progress plain ||
             die "Build failed ..."
@@ -50,7 +48,6 @@ BUILD() {
     else
         RUN podman build -t $IMAGE . ||
             die "Build failed ..."
-        #RUN podman login
         RUN PUSH $IMAGE
     fi
 }
@@ -127,7 +124,9 @@ PUSH() {
     IMAGE=$1
 
     case $PUSH in
-         registry) $BUILDER push $IMAGE
+         registry)
+           LOGIN
+           $BUILDER push $IMAGE
            IMAGE_ID_DIGEST=$( podman inspect $IMAGE | jq -rc '.[0] | { Id, Digest }' )
            echo $(date) [$(hostname -A)]: $IMAGE_ID_DIGEST >> .build.history
            tail -1 .build.history

@@ -8,6 +8,31 @@ import time, os, sys
 import threading
 import traceback
 
+import signal
+
+TERMINATING=False
+
+def signal_handler(sig, frame):
+    ''' NOTE: SIGKILL cannot be caught, blocked, or ignored. '''
+    if sig == SIGTERM:
+        print('Received SIGTERM ... finishing processing ongoing requests ...')
+        READY=False
+        TERMINATING=True
+        return
+    # catchall:
+    print('Received signal {sig} - ignoring')
+    return
+
+# Sent when Pod is to be deleted: Pod shoud terminate
+signal.signal(signal.SIGTERM, signal_handler)
+# UNUSED:
+signal.signal(signal.SIGINT,  signal_handler)
+#signal.pause()
+
+
+
+
+
 serverhost=socket.gethostname()
 serverip=socket.gethostbyname(socket.gethostname())
 
@@ -33,8 +58,11 @@ def gettimestr():
     return time.strftime('%Y-%B-%d %02H:%02M:%0S')
 
 def thread(delay):
-  global STARTED, LIVE, READY, CONFIG, START_TIME
+  global STARTED, LIVE, READY, CONFIG, START_TIME, TERMINATING
   global hostName, serverPort
+
+  if TERMINATING:
+    return
 
   while True:
     time.sleep(1)
@@ -148,11 +176,13 @@ http_requests_total{image='''+IMAGE+''',code="503"} '''+str(RESP_503)+'\n'
             self.send_header("Content-type", "text/plain")
             self.end_headers()
             content=f'''
-Time since start={ now_secs - START_TIME:%.2d } secs
+Time since start={ now_secs - START_TIME } secs
 CONFIG={CONFIG}
 200 responses={RESP_200}, 503 responses={RESP_503}
 STARTED={STARTED} LIVE={LIVE} READY={READY}
 '''
+
+            delay = time.time() - START_TIME
             if not STARTED: content += f'Starting in { CONFIG["startup-delay"] - delay } secs\n'
             if not LIVE:    content += f'Live     in { CONFIG["liveness-delay"] - delay } secs\n'
             if not READY:   content += f'Ready    in { CONFIG["readiness-delay"] - delay } secs\n'
@@ -231,8 +261,6 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
             self.sendResponse(200, content, "text/html")
 
 if __name__ == "__main__":        
-    global serverPort
-
     config_file="/etc/k8s-demo/config"
     CONFIG={}
 
@@ -276,18 +304,19 @@ if __name__ == "__main__":
 
     #check_config(CONFIG)
 
-    sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Starting server on port { serverPort } ...\n")
-    webServer = HTTPServer((hostName, serverPort), WebServer)
     now=gettimestr()
+    webServer = HTTPServer((hostName, serverPort), WebServer)
 
     if             not "startup-delay"   in CONFIG: STARTED=True
     if STARTED and not "liveness-delay"  in CONFIG: LIVE=True
     if LIVE    and not "readiness-delay" in CONFIG: READY=True
 
-    try:
-        webServer.serve_forever()
-    except KeyboardInterrupt:
-        pass
+    #try:
+    sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Starting server on port { serverPort } ...\n")
+    webServer.serve_forever()
+    #except KeyboardInterrupt:
+    #    pass
+    sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server exited !!\n")
 
     webServer.server_close()
 
