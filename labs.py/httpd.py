@@ -231,15 +231,16 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
             self.sendResponse(200, content, "text/html")
 
 if __name__ == "__main__":        
-    GLOBAL serverPort
+    global serverPort
 
-    a = 1
     config_file="/etc/k8s-demo/config"
     CONFIG={}
 
     RESP_200=0
     RESP_503=0
 
+    a = 1
+    if a < len(sys.argv): print(f"Reading { len(sys.argv) -1 cli arguments")
     while a < len(sys.argv):
         if sys.argv[a] == "-p" or sys.argv[a] == "--port":
             a+=1
@@ -256,6 +257,8 @@ if __name__ == "__main__":
         if sys.argv[a] == "-rd" or sys.argv[a] == "--readiness-delay":
             a+=1;
             CONFIG['readiness-delay']=int(sys.argv[a])
+        a+=1;
+    if len(sys.argv) > 1: print(f"Done reading cli arguments")
 
     START_TIME=time.time()
 
@@ -273,9 +276,9 @@ if __name__ == "__main__":
 
     #check_config(CONFIG)
 
+    sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Starting server on port { serverPort } ...\n")
     webServer = HTTPServer((hostName, serverPort), WebServer)
     now=gettimestr()
-    sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server starting ...\n")
 
     if             not "startup-delay"   in CONFIG: STARTED=True
     if STARTED and not "liveness-delay"  in CONFIG: LIVE=True
