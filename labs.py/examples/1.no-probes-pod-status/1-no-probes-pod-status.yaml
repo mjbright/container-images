@@ -1,0 +1,57 @@
+---
+# This Pod has init continers with a small delay so that we can clearly see the order of status changes on the Pod:
+# To see this:
+#    kubectl apply -f 1-no-probes-pod-status.yaml
+#
+# in 1 window observer the sequential starting of the init and then the app container:
+#    kubectl get pods -l app=1-no-probes-pod-status -o wide --watch
+#    
+# in another window obtain the yaml of the running Pod and extract the status conditions:
+#    POD1=$( kubectl get pods -l app=1-no-probes-pod-status --no-headers | awk '{ print $1; exit(0); }' )
+#    repeat:
+#        kubectl get pod $POD1 -o yaml | grep -A40 '^status:' | grep -E 'TransitionTime:|type:'
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: 1-no-probes-pod-status
+  name: 1-no-probes-pod-status
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: 1-no-probes-pod-status
+  template:
+    metadata:
+      labels:
+        app: 1-no-probes-pod-status
+    spec:
+
+      # Init containers insert a delay
+
+      initContainers:
+      - name:  init-1
+        image: alpine
+        command: ['/bin/sh', '-c', 'echo "Starting init-1 ..."; /bin/sleep 3; echo "DONE"']
+      - name:  init-2
+        image: alpine
+        command: ['/bin/sh', '-c', 'echo "Starting init-2 ..."; /bin/sleep 3; echo "DONE"']
+      - name:  init-3
+        image: alpine
+        command: ['/bin/sh', '-c', 'echo "Starting init-3 ..."; /bin/sleep 3; echo "DONE"']
+      - name:  init-4
+        image: alpine
+        command: ['/bin/sh', '-c', 'echo "Starting init-4 ..."; /bin/sleep 3; echo "DONE"']
+
+      containers:
+      - image: mjbright/labs:py
+        # Always pull image from the docker hub, as this image frequently changes:
+        imagePullPolicy: Always
+        name: k8s-demo
+        command: ['/bin/sh', '-c', 'echo "Starting k8s-demo ..."; /app/httpd.py; echo "NEVER DONE"']
+
+      - image: alpine
+        name: sleeper
+        command: ['/bin/sh', '-c', 'echo "Starting sleep ..."; /bin/sleep infinity; echo "NEVER DONE"']
+
