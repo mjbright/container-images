@@ -241,7 +241,7 @@ if __name__ == "__main__":
     RESP_503=0
 
     while a < len(sys.argv):
-        if sys.argv[a] == "-p":
+        if sys.argv[a] == "-p" or sys.argv[a] == "--port":
             a+=1
             serverPort=int(sys.argv[a])
         if sys.argv[a] == "-c":
