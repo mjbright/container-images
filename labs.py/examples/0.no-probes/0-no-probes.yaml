@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: 0-no-probes
+  name: 0-no-probes
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: 0-no-probes
+  template:
+    metadata:
+      labels:
+        app: 0-no-probes
+    spec:
+      containers:
+      - image: mjbright/labs:py
+        # Always pull image from the docker hub, as this image frequently changes:
+        imagePullPolicy: Always
+        name: k8s-demo
+
