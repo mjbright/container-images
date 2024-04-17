@@ -5,7 +5,7 @@ metadata:
   name: k8s-demo-py
 data:
   config: |
-     # liveness & readiness values are time AFTER startup delay
+     # NOTE: liveness & readiness values are time AFTER startup delay
      startup-delay: 10
      liveness-delay: 5
      readiness-delay: 15

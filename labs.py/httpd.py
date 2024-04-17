@@ -19,6 +19,7 @@ PNG="static/img/kubernetes_blue.png"
 IMAGE='UNSET'
 HOSTTYPE='UNSET'
 
+# NOTE: liveness & readiness values are time AFTER startup delay
 CONFIG={}
 
 STARTED=False
@@ -147,9 +148,9 @@ http_requests_total{image='''+IMAGE+''',code="503"} '''+str(RESP_503)+'\n'
             self.send_header("Content-type", "text/plain")
             self.end_headers()
             content=f'''
-Time since start={ now_secs - START_TIME } secs
+Time since start={ now_secs - START_TIME:%.2d } secs
 CONFIG={CONFIG}
-200 responses={RESP_200} 503 responses={RESP_503}
+200 responses={RESP_200}, 503 responses={RESP_503}
 STARTED={STARTED} LIVE={LIVE} READY={READY}
 '''
             if not STARTED: content += f'Starting in { CONFIG["startup-delay"] - delay } secs\n'
@@ -264,6 +265,8 @@ if __name__ == "__main__":
     elif os.path.exists(f"examples/{config_file}"):
         CONFIG=read_config(f"examples/{config_file}")
         config_file=f"examples/{config_file}"
+
+    #check_config(CONFIG)
 
     webServer = HTTPServer((hostName, serverPort), WebServer)
     now=gettimestr()
