@@ -14,23 +14,29 @@ TERMINATING=False
 
 def signal_handler(sig, frame):
     ''' NOTE: SIGKILL cannot be caught, blocked, or ignored. '''
-    if sig == SIGTERM:
+    #if sig == signal.SIGSTOP:
+    #    print('Received SIGSTOP ... finishing processing ongoing requests ...')
+    #    READY=False
+    #    TERMINATING=True
+    #    return
+    if sig == signal.SIGTERM:
         print('Received SIGTERM ... finishing processing ongoing requests ...')
         READY=False
         TERMINATING=True
         return
+    if sig == signal.SIGINT:
+        print('Received SIGINT ... finishing processing ongoing requests ...')
+        READY=False
+        TERMINATING=True
+        return
     # catchall:
-    print('Received signal {sig} - ignoring')
+    print(f'Received signal {sig} - ignoring')
     return
 
 # Sent when Pod is to be deleted: Pod shoud terminate
+#signal.signal(signal.SIGSTOP, signal_handler)
 signal.signal(signal.SIGTERM, signal_handler)
-# UNUSED:
 signal.signal(signal.SIGINT,  signal_handler)
-#signal.pause()
-
-
-
 
 
 serverhost=socket.gethostname()
@@ -57,6 +63,10 @@ def gettimestr():
     # 2024-April-13 14:46:48
     return time.strftime('%Y-%B-%d %02H:%02M:%0S')
 
+def die(msg, code=1):
+    sys.stderr.write(f'die: { sys.argv[0] } - { msg }\n')
+    sys.exit(code)
+
 def thread(delay):
   global STARTED, LIVE, READY, CONFIG, START_TIME, TERMINATING
   global hostName, serverPort
@@ -70,21 +80,35 @@ def thread(delay):
     delay = time.time() - START_TIME
     now=gettimestr()
 
-    if not STARTED and "startup-delay" in CONFIG and delay > CONFIG["startup-delay"]:
-        MSG=f"[{now}] Startup phase completed"
-        print(MSG)
-        sys.stderr.write(f"{MSG}\n")
-        STARTED=True
-    if not LIVE and "liveness-delay" in CONFIG and delay > (CONFIG['liveness-delay'] + CONFIG['startup-delay']):
-        MSG=f"[{now}] Liveness phase completed"
-        print(MSG)
-        sys.stderr.write(f"{MSG}\n")
-        LIVE=True
-    if not READY and "readiness-delay" in CONFIG and delay > (CONFIG['readiness-delay'] + CONFIG['startup-delay']):
-        MSG=f"[{now}] Readiness phase completed"
-        print(MSG)
-        sys.stderr.write(f"{MSG}\n")
-        READY=True
+    if not STARTED:
+        if not "startup-delay" in CONFIG: CONFIG["startup-delay"]=0
+
+        #if "startup-delay" in CONFIG and delay > CONFIG["startup-delay"]:
+        if delay > CONFIG["startup-delay"]:
+            MSG=f"[{now}] Startup phase completed"
+            print(MSG)
+            sys.stderr.write(f"{MSG}\n")
+            STARTED=True
+
+    if not LIVE:
+        if not "liveness-delay" in CONFIG: CONFIG["liveness-delay"]=0
+
+        #if "liveness-delay" in CONFIG and delay > (CONFIG['liveness-delay'] + CONFIG['startup-delay']):
+        if delay > (CONFIG['liveness-delay'] + CONFIG['startup-delay']):
+            MSG=f"[{now}] Liveness phase completed"
+            print(MSG)
+            sys.stderr.write(f"{MSG}\n")
+            LIVE=True
+
+    if not READY:
+        if not "readiness-delay" in CONFIG: CONFIG["readiness-delay"]=0
+
+        #if "readiness-delay" in CONFIG and delay > (CONFIG['readiness-delay'] + CONFIG['startup-delay']):
+        if delay > (CONFIG['readiness-delay'] + CONFIG['startup-delay']):
+            MSG=f"[{now}] Readiness phase completed"
+            print(MSG)
+            sys.stderr.write(f"{MSG}\n")
+            READY=True
         sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server started - listening on http://{hostName}:{serverPort}\n")
 
 def readfile(path):
@@ -183,8 +207,8 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
 '''
 
             delay = time.time() - START_TIME
-            if not STARTED: content += f'Starting in { CONFIG["startup-delay"] - delay } secs\n'
-            if not LIVE:    content += f'Live     in { CONFIG["liveness-delay"] - delay } secs\n'
+            if not STARTED: content += f'Starting in { CONFIG["startup-delay"]   - delay } secs\n'
+            if not LIVE:    content += f'Live     in { CONFIG["liveness-delay"]  - delay } secs\n'
             if not READY:   content += f'Ready    in { CONFIG["readiness-delay"] - delay } secs\n'
 
             self.sendResponse(200, content, "text/plain")
@@ -261,6 +285,7 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
             self.sendResponse(200, content, "text/html")
 
 if __name__ == "__main__":        
+    sys.stderr.write(f'{ " ".join( sys.argv ) }\n')
     config_file="/etc/k8s-demo/config"
     CONFIG={}
 

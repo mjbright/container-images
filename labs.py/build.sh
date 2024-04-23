@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+cd $( dirname $0 )
+
+mkdir -p tmp
+
 IMAGE_BASE=mjbright/labs:py
 IMAGE=${IMAGE_BASE}
 
@@ -85,7 +89,8 @@ BUILD_ALL() {
     local C
 
     for IDX in {1..6}; do
-        IMAGE=mjbright/k8s-demo:py${IDX}
+        #IMAGE=mjbright/k8s-demo:py${IDX}
+        IMAGE=${IMAGE_BASE}${IDX}
         echo; echo "==== Building image $IMAGE"
 
         case $IDX in
@@ -127,7 +132,7 @@ PUSH() {
          registry)
            LOGIN
            $BUILDER push $IMAGE
-           IMAGE_ID_DIGEST=$( podman inspect $IMAGE | jq -rc '.[0] | { Id, Digest }' )
+           IMAGE_ID_DIGEST=$( $BUILDER inspect $IMAGE | jq -rc '.[0] | { Id, Digest }' )
            echo $(date) [$(hostname -A)]: $IMAGE_ID_DIGEST >> .build.history
            tail -1 .build.history
            ;;
@@ -144,8 +149,12 @@ PUSH() {
 
 ## Args: ----------------------------------------------------------------------
 
-which docker && BUILDER=docker ||
+which docker && BUILDER=docker || {
     which podman && BUILDER=podman
+}
+
+#echo "BUILDER=$BUILDER"
+#exit
 
 while [ $# -ne 0 ]; do
     case $1 in
