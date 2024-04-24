@@ -21,5 +21,6 @@ COPY tmp/httpd.py  /app/httpd.py
 EXPOSE 8080
 
 # Note: The default command to run when a Container is created from this Container Image
-CMD /app/httpd.py
+# Note: Use exec format, so that signal handling works:
+CMD ["/app/httpd.py"]
 
