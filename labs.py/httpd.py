@@ -11,23 +11,42 @@ import traceback
 import signal
 
 TERMINATING=False
+terminate_start=0
 
 def signal_handler(sig, frame):
+    global TERMINATING, READY
+
     ''' NOTE: SIGKILL cannot be caught, blocked, or ignored. '''
+
     #if sig == signal.SIGSTOP:
     #    print('Received SIGSTOP ... finishing processing ongoing requests ...')
     #    READY=False
     #    TERMINATING=True
     #    return
+
     if sig == signal.SIGTERM:
-        print('Received SIGTERM ... finishing processing ongoing requests ...')
+        terminate_start=time.time()
+        sys.stderr.write('Received SIGTERM ... finishing processing ongoing requests ...\n')
+        sys.stderr.flush()
         READY=False
         TERMINATING=True
+
+        threading.Thread(target=terminating_thread, args=(terminate_start,)).start()
         return
+
     if sig == signal.SIGINT:
-        print('Received SIGINT ... finishing processing ongoing requests ...')
+        sys.stderr.write('Received SIGINT ... finishing processing ongoing requests ...\n')
+        sys.stderr.write(f'TERMINATING={TERMINATING}\n')
+        sys.stderr.flush()
         READY=False
+        if TERMINATING:
+            _thread.interrupt_main()
+            #os._exit()
+            # os.kill(os.getpid(), signal.SIGINT)
+            # only exits thread: sys.exit(1)
+        terminate_start=time.time()
         TERMINATING=True
+        threading.Thread(target=terminating_thread, args=(terminate_start,)).start()
         return
     # catchall:
     print(f'Received signal {sig} - ignoring')
@@ -37,7 +56,6 @@ def signal_handler(sig, frame):
 #signal.signal(signal.SIGSTOP, signal_handler)
 signal.signal(signal.SIGTERM, signal_handler)
 signal.signal(signal.SIGINT,  signal_handler)
-
 
 serverhost=socket.gethostname()
 serverip=socket.gethostbyname(socket.gethostname())
@@ -49,6 +67,8 @@ ASCIITEXT="static/img/kubernetes_blue.txt"
 PNG="static/img/kubernetes_blue.png"
 IMAGE='UNSET'
 HOSTTYPE='UNSET'
+if IMAGE != "UNSET":                           HOSTTYPE="Container"
+if os.getenv("KUBERNETES_SERVICE_PORT") != "": HOSTTYPE="Pod"
 
 # NOTE: liveness & readiness values are time AFTER startup delay
 CONFIG={}
@@ -65,9 +85,17 @@ def gettimestr():
 
 def die(msg, code=1):
     sys.stderr.write(f'die: { sys.argv[0] } - { msg }\n')
+    sys.stderr.flush()
     sys.exit(code)
 
-def thread(delay):
+def terminating_thread(terminate_start):
+  while True:
+    terminating_wait = time.time() - terminate_start
+    time.sleep(1)
+    sys.stderr.write(f"[{terminating_wait:.2f} sec] [SIGTERM received] Terminating tasks...\n")
+    sys.stderr.flush()
+
+def check_phase_thread(delay):
   global STARTED, LIVE, READY, CONFIG, START_TIME, TERMINATING
   global hostName, serverPort
 
@@ -80,36 +108,38 @@ def thread(delay):
     delay = time.time() - START_TIME
     now=gettimestr()
 
-    if not STARTED:
-        if not "startup-delay" in CONFIG: CONFIG["startup-delay"]=0
+    if not "startup-delay" in CONFIG: CONFIG["startup-delay"]=0
+    if not "liveness-delay" in CONFIG: CONFIG["liveness-delay"]=0
+    if not "readiness-delay" in CONFIG: CONFIG["readiness-delay"]=0
 
+    if not STARTED:
         #if "startup-delay" in CONFIG and delay > CONFIG["startup-delay"]:
         if delay > CONFIG["startup-delay"]:
             MSG=f"[{now}] Startup phase completed"
             print(MSG)
             sys.stderr.write(f"{MSG}\n")
+            sys.stderr.flush()
             STARTED=True
 
     if not LIVE:
-        if not "liveness-delay" in CONFIG: CONFIG["liveness-delay"]=0
-
         #if "liveness-delay" in CONFIG and delay > (CONFIG['liveness-delay'] + CONFIG['startup-delay']):
         if delay > (CONFIG['liveness-delay'] + CONFIG['startup-delay']):
             MSG=f"[{now}] Liveness phase completed"
             print(MSG)
             sys.stderr.write(f"{MSG}\n")
+            sys.stderr.flush()
             LIVE=True
 
     if not READY:
-        if not "readiness-delay" in CONFIG: CONFIG["readiness-delay"]=0
-
         #if "readiness-delay" in CONFIG and delay > (CONFIG['readiness-delay'] + CONFIG['startup-delay']):
         if delay > (CONFIG['readiness-delay'] + CONFIG['startup-delay']):
             MSG=f"[{now}] Readiness phase completed"
             print(MSG)
             sys.stderr.write(f"{MSG}\n")
+            sys.stderr.flush()
             READY=True
         sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server started - listening on http://{hostName}:{serverPort}\n")
+        sys.stderr.flush()
 
 def readfile(path):
    return "".join( open(path).readlines() )
@@ -124,6 +154,7 @@ def read_config(config_file):
     MSG=f"Reading config from {config_file}"
     print(MSG)
     sys.stderr.write(f"{MSG}\n")
+    sys.stderr.flush()
 
     keys=["startup-delay", "liveness-delay", "readiness-delay"]
     set_default_keys=["startup-delay", "liveness-delay", "readiness-delay"]
@@ -169,6 +200,7 @@ class WebServer(BaseHTTPRequestHandler):
         now=gettimestr()
         #print(f'[{now}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
         #sys.stderr.write(f'[{now}] [{hosttype} {networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
+        #sys.stderr.flush()
 
         if self.path == "/metrics":
             metrics='''
@@ -251,6 +283,7 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
         imageinfo=IMAGE
         networkinfo=f"{serverhost}/{serverip}"
         sys.stderr.write(f'[{now}] [{networkinfo}] {IMAGE}: Request received for {host}{self.path} from user agent {useragent}\n')
+        sys.stderr.flush()
 
         content=""
         if "curl" in useragent or "http" in useragent or "wget" in useragent:
@@ -286,6 +319,7 @@ STARTED={STARTED} LIVE={LIVE} READY={READY}
 
 if __name__ == "__main__":        
     sys.stderr.write(f'{ " ".join( sys.argv ) }\n')
+    sys.stderr.flush()
     config_file="/etc/k8s-demo/config"
     CONFIG={}
 
@@ -316,7 +350,7 @@ if __name__ == "__main__":
     START_TIME=time.time()
 
     # NOTE: use of , in args, even when a single value:
-    threading.Thread(target=thread, args=(1.0,)).start()
+    threading.Thread(target=check_phase_thread, args=(1.0,)).start()
 
     # In container:
     if os.path.exists(config_file):
@@ -338,10 +372,12 @@ if __name__ == "__main__":
 
     #try:
     sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Starting server on port { serverPort } ...\n")
+    sys.stderr.flush()
     webServer.serve_forever()
     #except KeyboardInterrupt:
     #    pass
     sys.stderr.write(f"[{now}] [{serverhost}/{serverip}] [wd={ os.getcwd() }]: Server exited !!\n")
+    sys.stderr.flush()
 
     webServer.server_close()
 
