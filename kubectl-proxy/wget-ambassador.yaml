@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wget-with-ambassador
+spec:
+  serviceAccountName: default-api
+  containers:
+  - name: main
+    image: alpine
+    command: ["sleep", "infinity"]
+  - name: ambassador
+    image: mjbright/kubectl-proxy:1
+    imagePullPolicy: Always

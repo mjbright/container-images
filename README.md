@@ -13,3 +13,6 @@ These are standalone container images for demoing, testing ...
 - labs.py: A Python web server to be used in trainings for demos and labs
 - mkdocs.py: TBD
 - simple-webslides.py: TBD
+- kubectl-proxy: TBD
+- kube-python-client: TBD
+- ubuntu-plus-packages: TBD
