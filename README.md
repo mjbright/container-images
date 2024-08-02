@@ -15,4 +15,5 @@ These are standalone container images for demoing, testing ...
 - simple-webslides.py: TBD
 - kubectl-proxy: TBD
 - kube-python-client: TBD
-- ubuntu-plus-packages: TBD
+- ubuntu-plus-packages: base ubuntu:24.04 plus some networking tools (curl, wget, httpie, iputils)
+- ubuntu-sshd: ubuntu with sshd configured (fork of https://github.com/aoudiamoncef/ubuntu-sshd)
