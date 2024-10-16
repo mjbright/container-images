@@ -1,6 +1,15 @@
+#!/usr/bin/env python3
+
+# For none-container testing, install redis/flask modules:
+#    python3 -m pip install redis flask
+
 from flask import Flask, request, Response, stream_with_context, jsonify
 from redis import Redis
 import os, time, json
+
+import colour
+colour.colour(True)
+
 app = Flask(__name__)
 db = Redis( host = os.getenv( 'REDIS', 'redis'),
             port = int(os.getenv( 'REDIS_SERVICE_PORT', '6379' ) ) )
@@ -8,7 +17,7 @@ db = Redis( host = os.getenv( 'REDIS', 'redis'),
 @app.route('/')
 def hello():
     db.incr('count')
-    return '[__IMAGE__] Count is %s.' % db.get('count')
+    return f'{__COLOUR__}[__IMAGE__]{colour.C_NORMAL} [{host}] Redis counter value={ db.get("count") }\n'
 
 
 @app.route('/<path:path>', methods = ['PUT', 'GET'])
@@ -30,4 +39,5 @@ def home(path):
 
 
 if __name__ == "__main__":
+    print(f"Launching server on port {colour.C_RED}5000{colour.C_NORMAL}\n")
     app.run(host="0.0.0.0", debug=True)

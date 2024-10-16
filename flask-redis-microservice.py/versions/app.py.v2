@@ -1,6 +1,13 @@
+#!/usr/bin/env python3
+
+# For none-container testing, install redis/flask modules:
+#    python3 -m pip install redis flask
 
 import os, time, json
 import socket
+
+import colour
+colour.colour(True)
 
 from redis import Redis
 from flask import Flask, request, Response, stream_with_context, jsonify
@@ -24,7 +31,7 @@ def hello():
     host = socket.gethostname()
 
     if not HTML:
-        return '''[__IMAGE__] [%s] Redis counter value=%s\n''' % (host, db.get('count'))
+        return f'{__COLOUR__}[__IMAGE__]{colour.C_NORMAL} [{host}] Redis counter value={ db.get("count") }\n'
     
     return '''
 
@@ -52,4 +59,5 @@ def hello():
 
 
 if __name__ == "__main__":
+    print(f"Launching server on port {colour.C_RED}5000{colour.C_NORMAL}\n")
     app.run(host="0.0.0.0", debug=True)

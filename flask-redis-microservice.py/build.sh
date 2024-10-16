@@ -83,8 +83,23 @@ for version in $VERSIONS; do
     D_IMAGE="$D_USER/$APP:v$version"
     START=$SECONDS
 
+    case $version in
+        0) COLOUR=colour.C_RED;;
+        1) COLOUR=colour.C_GREEN;;
+        2) COLOUR=colour.C_BLUE;;
+        3) COLOUR=colour.C_YELLOW;;
+        4) COLOUR=colour.C_WHITE;;
+        5) COLOUR=colour.C_MAGENTA;;
+        *) COLOUR=colour.C_CYAN;;
+    esac
+
     #cp -a versions/app.py.v$version app.py
-    sed "s?__IMAGE__?$D_IMAGE?" < versions/app.py.v$version > app.py
+    sed < versions/app.py.v$version > app.py \
+        -e "s?__IMAGE__?$D_IMAGE?" \
+        -e "s?__COLOUR__?$COLOUR?" \
+
+
+    chmod +x app.py
 
     CMD="$BUILDER build . $BUILD_ARGS -t ${D_IMAGE}"
     echo; echo "-- $CMD"
