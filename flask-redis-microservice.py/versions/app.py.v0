@@ -8,7 +8,7 @@ db = Redis( host = os.getenv( 'REDIS', 'redis'),
 @app.route('/')
 def hello():
     db.incr('count')
-    return 'Count is %s.' % db.get('count')
+    return '[__IMAGE__] Count is %s.' % db.get('count')
 
 
 @app.route('/<path:path>', methods = ['PUT', 'GET'])

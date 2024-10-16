@@ -56,6 +56,7 @@ which docker 2>/dev/null && {
 [ -z "$BUILDER" ] && {
      BUILDER=$(which podman 2>/dev/null)
      BUILD_ARGS=""
+     QUICK_BUILD=1
 }
 [ -z "$BUILDER" ] && die "Failed to find either docker or podman in PATH"
 
@@ -82,7 +83,8 @@ for version in $VERSIONS; do
     D_IMAGE="$D_USER/$APP:v$version"
     START=$SECONDS
 
-    cp -a versions/app.py.v$version app.py
+    #cp -a versions/app.py.v$version app.py
+    sed "s?__IMAGE__?$D_IMAGE?" < versions/app.py.v$version > app.py
 
     CMD="$BUILDER build . $BUILD_ARGS -t ${D_IMAGE}"
     echo; echo "-- $CMD"
@@ -96,6 +98,7 @@ for version in $VERSIONS; do
 
     ## -- Arch: ---------------------------------------------------------------
     if [ $QUICK_BUILD -eq 0 ]; then
+        [ $BUILDER != docker ] && die "buildx can only be used with docker, not '$BUILDER'"
         echo
         PRESS "Building $D_IMAGE for multiple architectures"
         # See:

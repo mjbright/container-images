@@ -24,7 +24,7 @@ def hello():
     host = socket.gethostname()
 
     if not HTML:
-        return '''[%s] Redis counter value=%s\n''' % (host, db.get('count'))
+        return '''[__IMAGE__] [%s] Redis counter value=%s\n''' % (host, db.get('count'))
     
     return '''
 

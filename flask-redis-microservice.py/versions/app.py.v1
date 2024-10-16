@@ -19,7 +19,7 @@ def hello():
     db.incr('count')
 
     host = socket.gethostname()
-    return '''[%s] Redis counter value=%s\n''' % (host, db.get('count'))
+    return '''[__IMAGE__] [%s] Redis counter value=%s\n''' % (host, db.get('count'))
     
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
