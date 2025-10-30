@@ -44,6 +44,8 @@ for FROM_IMAGE in scratch alpine; do
            -e "s?TEMPLATE_REPLACE_LOGO?${PICTURE_PATH_BASE}.txt?" \
            -e "s?TEMPLATE_IMAGE_NAME_VERSION?$IMAGE_NAME_VERSION?" \
            -e "s/TEMPLATE_IMAGE_VERSION/$IMAGE_VERSION/" \
+           -e "s/TEMPLATE_LIVENESS/OK/" \
+           -e "s/TEMPLATE_READINESS/OK/" \
 	   demo-main-go.tmpl > demo-main.go
 
            #-e "s/__DATE_VERSION__/$DATE_VERSION/" \

@@ -208,19 +208,19 @@ func index(w http.ResponseWriter, r *http.Request) {
             fmt.Fprintf(w, "\n%s", requestPP)
             var content []byte
 
+	    if r.URL.Path != "/1" {
+	        content, _ = ioutil.ReadFile( LOGO_ASCII_ART )
+            }
 	    if r.URL.Path == "/map" || r.URL.Path == "/MAP" {
 	        content, _ = ioutil.ReadFile( MAP_ASCII_ART )
-            } else {
-	        content, _ = ioutil.ReadFile( LOGO_ASCII_ART )
             }
 
             myIP := GetOutboundIP()
             from := r.RemoteAddr
             fwd := r.Header.Get("X-Forwarded-For")
 
-	    if r.URL.Path != "/1line" {
-	        w.Write([]byte(content))
-            }
+	    /* if r.URL.Path != "/1line" { w.Write([]byte(content)) } */
+	    if r.URL.Path != "/1" { w.Write([]byte(content)) }
 
             p1 := fmt.Sprintf("Served from container %s%s[%s]%s", colour_me_yellow, hostname, myIP, colour_me_normal)
             p2 := ""
@@ -232,24 +232,19 @@ func index(w http.ResponseWriter, r *http.Request) {
             p3 := ""
             if networkInfo != "" {
                 p3 = fmt.Sprintf("%s ", networkInfo)
-	        if r.URL.Path != "/1line" {
-                    p3 = p3 + "\n"
-                }
+	        /* if r.URL.Path != "/1line" { p3 = p3 + "\n" } */
             }
-            p4 := fmt.Sprintf("image <%s>\n", image_name_version)
+            /*p4 := fmt.Sprintf("image <%s>\n", image_name_version) */
+            p4 := fmt.Sprintf("image <%s> ", image_name_version)
 
-	    if r.URL.Path == "/1line" {
-                fmt.Fprintf(w, p1 + " " + p2 + " " + p3 + p4)
+            fmt.Fprintf(w, p1 + " " + p2 + " " + p3 + p4)
+	    /* if r.URL.Path == "/1line" { fmt.Fprintf(w, p1 + " " + p2 + " " + p3 + p4)
             } else {
-                fmt.Fprintf(w, "\n")
-                fmt.Fprintf(w, p1)
-                fmt.Fprintf(w, "\n")
-                fmt.Fprintf(w, p2)
-                fmt.Fprintf(w, "\n")
-                fmt.Fprintf(w, p3)
-                fmt.Fprintf(w, p4)
-                fmt.Fprintf(w, "\n")
-            }
+                fmt.Fprintf(w, "\n") fmt.Fprintf(w, p1)
+                fmt.Fprintf(w, "\n") fmt.Fprintf(w, p2)
+                fmt.Fprintf(w, "\n") fmt.Fprintf(w, p3)
+                fmt.Fprintf(w, p4) fmt.Fprintf(w, "\n")
+            } */
 
 	    return
 	}
