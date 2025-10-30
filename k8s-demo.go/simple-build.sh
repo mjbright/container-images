@@ -2,6 +2,11 @@
 
 DATE_VERSION=$(date +%Y-%b-%d_%02Hh%02Mm%02S)
 
+BASE_IMAGE="mjbright/k8s-demo"
+
+PROG="--progress plain"
+PROG=""
+
 let START_S=SECONDS
 
 for FROM_IMAGE in scratch alpine; do
@@ -18,8 +23,8 @@ for FROM_IMAGE in scratch alpine; do
 
     for V in {1..6}; do
         PICTURE_COLOUR="blue"
-        IMAGE_NAME_VERSION="mjbright/k8s-demo:$V"
-        [ $FROM_IMAGE = "alpine" ] && IMAGE_NAME_VERSION="mjbright/k8s-demo:alpine$V"
+        IMAGE_NAME_VERSION="$BASE_IMAGE:$V"
+        [ $FROM_IMAGE = "alpine" ] && IMAGE_NAME_VERSION="$BASE_IMAGE:alpine$V"
         IMAGE_VERSION=$V
 
         case $V in
@@ -47,7 +52,7 @@ for FROM_IMAGE in scratch alpine; do
            templates/Dockerfile.tmpl > Dockerfile
 
 	set -x
-        docker build -f Dockerfile -t $IMAGE_NAME_VERSION .
+        docker build -f Dockerfile -t $IMAGE_NAME_VERSION $PROG .
 	set +x
     done
 done
@@ -56,4 +61,5 @@ let END_S=SECONDS
 let TOOK_S=END_S-START_S
 
 echo "Took $TOOK_S seconds"
+
 
