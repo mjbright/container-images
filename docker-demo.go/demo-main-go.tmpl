@@ -212,7 +212,7 @@ func index(w http.ResponseWriter, r *http.Request) {
             }
             p4 := fmt.Sprintf("image <%s> ", image_name_version)
 
-            fmt.Fprintf(w, p1 + " " + p2 + " " + p3 + p4)
+            fmt.Fprintf(w, p1 + " " + p2 + " " + p3 + p4 + "\n")
 
 	    return
 	}
