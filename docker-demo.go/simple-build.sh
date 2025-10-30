@@ -40,6 +40,11 @@ for FROM_IMAGE in scratch alpine; do
         PICTURE_PATH_BASE="docker_$PICTURE_COLOUR"
 
         sed \
+           -e "s?FROM_IMAGE?$FROM_IMAGE?" \
+	   Dockerfile.tmpl > Dockerfile
+
+        sed \
+           -e "s/TEMPLATE_LIVENESS/OK/" \
            -e "s?__TEMPLATE_CMD__?$TEMPLATE_CMD?" \
            -e "s?TEMPLATE_REPLACE_LOGO?${PICTURE_PATH_BASE}.txt?" \
            -e "s?TEMPLATE_IMAGE_NAME_VERSION?$IMAGE_NAME_VERSION?" \

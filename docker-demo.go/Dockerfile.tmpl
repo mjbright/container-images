@@ -16,9 +16,7 @@ RUN cd /src && CGO_ENABLED=0 go build -a -o docker-demo
 
 # -- final stage ---------------------------------------------
 
-# TODO LATER have base image here as a VARIABLE - scratch or alpine => produce different images
-#FROM scratch
-FROM alpine
+FROM FROM_IMAGE
 
 ADD static    /app/static
 ADD templates /app/templates

@@ -163,28 +163,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 		hostname = "unknown"
 	}
 
-        // image_version "3": return early with status code 404 or /CODE (from r.URL.Path)
-        //
-        /* if "image_version" == "3" {
-            //fmt.Fprintf(w, "\nPATH=<%s>", r.URL.Path)
-            //if r.URL.Path == "/map" || r.URL.Path == "/MAP" {}
-
-            num, err := strconv.Atoi( r.URL.Path[1:] )
-            if err == nil {
-                // how to set numeric status code?
-                // http.Error(w, http.StatusText(num), num)
-
-                //num = http.StatusInternalServerError
-                w.WriteHeader( num )
-                fmt.Fprintf(w, "\nWriting status code <%d>\n", num)
-            } else {
-                fmt.Fprintf(w, "\nWriting default status code <NotFound>\n")
-                http.NotFound(w, r)
-            }
-
-            return
-        } */
-
         // Get user-agent: if text-browser, e.g. wget/curl/httpie/lynx/elinks return ascii-text image:
         //
         userAgent := r.Header.Get("User-Agent")
@@ -205,7 +183,7 @@ func index(w http.ResponseWriter, r *http.Request) {
             CaseInsensitiveContains(userAgent, "lynx") {
             w.Header().Set("Content-Type", "text/txt")
 
-            fmt.Fprintf(w, "\n%s", requestPP)
+            fmt.Fprintf(w, "%s", requestPP)
             var content []byte
 
 	    if r.URL.Path != "/1" {
@@ -219,7 +197,6 @@ func index(w http.ResponseWriter, r *http.Request) {
             from := r.RemoteAddr
             fwd := r.Header.Get("X-Forwarded-For")
 
-	    /* if r.URL.Path != "/1line" { w.Write([]byte(content)) } */
 	    if r.URL.Path != "/1" { w.Write([]byte(content)) }
 
             p1 := fmt.Sprintf("Served from container %s%s[%s]%s", colour_me_yellow, hostname, myIP, colour_me_normal)
@@ -232,19 +209,10 @@ func index(w http.ResponseWriter, r *http.Request) {
             p3 := ""
             if networkInfo != "" {
                 p3 = fmt.Sprintf("%s ", networkInfo)
-	        /* if r.URL.Path != "/1line" { p3 = p3 + "\n" } */
             }
-            /*p4 := fmt.Sprintf("image <%s>\n", image_name_version) */
             p4 := fmt.Sprintf("image <%s> ", image_name_version)
 
             fmt.Fprintf(w, p1 + " " + p2 + " " + p3 + p4)
-	    /* if r.URL.Path == "/1line" { fmt.Fprintf(w, p1 + " " + p2 + " " + p3 + p4)
-            } else {
-                fmt.Fprintf(w, "\n") fmt.Fprintf(w, p1)
-                fmt.Fprintf(w, "\n") fmt.Fprintf(w, p2)
-                fmt.Fprintf(w, "\n") fmt.Fprintf(w, p3)
-                fmt.Fprintf(w, p4) fmt.Fprintf(w, "\n")
-            } */
 
 	    return
 	}
