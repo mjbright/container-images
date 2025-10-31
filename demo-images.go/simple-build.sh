@@ -11,7 +11,9 @@ case $IP in
     178.63.102.36) H="hetzner1";;
 esac
 
-BUILD_INFO="[$USER@$H - $DATE_VERSION]"
+BUILD_REPO=$( git remote -v | sed -e 's/.*github/github/' -e 's/ .*//' | head -1 )
+BUILD_DIR=$( basename $PWD )
+BUILD_INFO="[$USER@$H - $DATE_VERSION - $BUILD_REPO - $BUILD_DIR ]"
 #echo "BUILD_INFO='$BUILD_INFO'"
 #exit
 
@@ -79,7 +81,7 @@ BUILD_IMAGES() {
             PICTURE_PATH_BASE="static/img.${IMAGE_GROUP}/${IMAGE_GROUP}_$PICTURE_COLOUR"
 
             sed \
-               -e "s/__BUILD_INFO__/$BUILD_INFO/" \
+               -e "s?__BUILD_INFO__?$BUILD_INFO?" \
                -e "s/__IMAGE_GROUP__/$IMAGE_GROUP/g" \
                -e "s/__DATE_VERSION__/$DATE_VERSION/" \
                -e "s/__FROM_IMAGE__/$FROM_IMAGE/" \
