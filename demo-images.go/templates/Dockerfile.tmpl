@@ -20,7 +20,7 @@ RUN ls -al  /src/demo-binary; ls -alh /src/demo-binary; /src/demo-binary --versi
 FROM __FROM_IMAGE__ AS runtime-image
 
 ADD static/css /app/static/css
-ADD static/img /app/static/img
+ADD static/img.__IMAGE_GROUP__ /app/static/img.__IMAGE_GROUP__
 ADD static/index.html /app/static/index.html
 #UNUSED - ADD static/font /app/static/font
 #UNUSED - ADD static/text /app/static/text
@@ -49,5 +49,6 @@ ENV IMAGE_VERSION="__IMAGE_VERSION__"
 ENV PICTURE_PATH_BASE="__PICTURE_PATH_BASE__"
 ENV PICTURE_COLOUR="__PICTURE_COLOUR__"
 
+ENV BUILD_INFO="__BUILD_INFO__"
 ENV DATE_VERSION="__DATE_VERSION__"
 
