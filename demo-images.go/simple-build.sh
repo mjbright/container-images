@@ -121,7 +121,9 @@ RUN_IMAGES() {
 
 STOP_IMAGES() {
     #docker rm -f c-1 c-alpine1
-    docker rm -f $(  docker ps | awk '/docker-demo:/ || /k8s-demo:/ { print $1; }' )
+    TOSTOP=$(  docker ps | awk '/\/app\/demo-binary/ { print $1; }' )
+    [ ! -z "$TOSTOP" ] && docker rm -f $TOSTOP
+    docker ps -a
 }
 
 TEST_IMAGES() {
@@ -160,10 +162,10 @@ REMOVE_IMAGES() {
 ## -- Args: --------------------------------------------------------------------------------
 #
 case "$1" in
-     -run) RUN_IMAGES; exit;;
-    -stop) STOP_IMAGES; exit;;
-    -test) RUN_IMAGES; TEST_IMAGES; exit;;
-      -rm) REMOVE_IMAGES; exit;;
+       -run) RUN_IMAGES; exit;;
+  -stop|-rm) STOP_IMAGES; exit;;
+      -test) RUN_IMAGES; TEST_IMAGES; exit;;
+       -rmi) REMOVE_IMAGES; exit;;
 esac
 
 ## -- Main: --------------------------------------------------------------------------------
