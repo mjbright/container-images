@@ -33,12 +33,6 @@ COPY    --from=__BUILD_ENV_TARGET__ /src/demo-binary /app/
 # No shell, available in scratch image so use exec format:
 RUN ["/app/demo-binary", "--version"]
 
-ENV DATE_VERSION="__DATE_VERSION__"
-ENV IMAGE_NAME_VERSION="__IMAGE_NAME_VERSION__"
-ENV IMAGE_VERSION="__IMAGE_VERSION__"
-ENV PICTURE_PATH_BASE="__PICTURE_PATH_BASE__"
-ENV PICTURE_COLOUR="__PICTURE_COLOUR__"
-
 EXPOSE __EXPOSE_PORT__
 
 # With this form, we would need to override entrypoint if we want a shell (with alpine version):
@@ -49,4 +43,11 @@ EXPOSE __EXPOSE_PORT__
 
 # With this form, we can easily overwrite the command:
 CMD __TEMPLATE_CMD__
+
+ENV IMAGE_NAME_VERSION="__IMAGE_NAME_VERSION__"
+ENV IMAGE_VERSION="__IMAGE_VERSION__"
+ENV PICTURE_PATH_BASE="__PICTURE_PATH_BASE__"
+ENV PICTURE_COLOUR="__PICTURE_COLOUR__"
+
+ENV DATE_VERSION="__DATE_VERSION__"
 
