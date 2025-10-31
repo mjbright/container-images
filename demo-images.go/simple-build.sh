@@ -146,6 +146,20 @@ TEST_IMAGES() {
     set +x
 }
 
+PUSH_IMAGES() {
+    docker login
+    for V in {1..6}; do
+	set -x
+        docker image push mjbright/docker-demo:$V
+        docker image push mjbright/docker-demo:alpine$V
+        docker image push mjbright/k8s-demo:$V
+        docker image push mjbright/k8s-demo:alpine$V
+	set +x
+        #docker image rm mjbright/tf-demo:$V
+        #docker image rm mjbright/tf-demo:alpine$V
+    done
+}
+
 REMOVE_IMAGES() {
     for V in {1..6}; do
 	 #   set -x
@@ -167,6 +181,7 @@ case "$1" in
        -run) RUN_IMAGES; exit;;
   -stop|-rm) STOP_IMAGES; exit;;
       -test) RUN_IMAGES; TEST_IMAGES; exit;;
+      -push) PUSH_IMAGES; exit;;
        -rmi) REMOVE_IMAGES; exit;;
 esac
 
