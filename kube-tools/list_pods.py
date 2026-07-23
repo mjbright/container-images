@@ -1,3 +1,5 @@
+#!/opt/venv/bin/python3
+
 #!/usr/bin/env python3
 
 from kubernetes import client, config

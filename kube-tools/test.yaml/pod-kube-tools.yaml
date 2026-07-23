@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  labels:
+    run: kube-tools
+  name: kube-tools
+
+spec:
+  serviceAccountName: kube-tools
+  containers:
+  - image: mjbright/kube-tools:1
+    name: kube-tools
+    imagePullPolicy: Always
+    restartPolicy: Never

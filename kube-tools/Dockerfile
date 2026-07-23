@@ -35,10 +35,8 @@ RUN wget https://github.com/kdash-rs/kdash/releases/download/v2.1.1/kdash-linux.
 ADD ./list_pods.py /app
 
 ADD ./install_krew.sh /app
-#ENV PATH=/root/.krew/bin:$PATH
-#RUN PATH=/root/.krew/bin:$PATH /root/.krew/bin/kubectl-krew install lineage tree explore example
-
 RUN /app/install_krew.sh
 
 CMD ['/app/list_pods.py']
+#CMD ['/opt/venv/bin/python3', './list_pods.py']
 
