@@ -1,4 +1,12 @@
 
+# TODO: Add cli/tui tools
+- add kubectl
+- add lfk
+- add k9s
+- add ...
+
+## -- OLD --------------------------------------------------------------------------------
+
 # TODO:
 Provide common build utilities
 Make images multi-platform builds
