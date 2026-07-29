@@ -17,8 +17,11 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
+RUN echo 'set -o vi' >> /root/.bashrc
+
 RUN curl -sLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
-    chmod a+x kubectl && mv kubectl /usr/local/bin
+    chmod a+x kubectl && mv kubectl /usr/local/bin &&
+    echo 'source <(kubectl completion bash)' >> /root/.bashrc
 
 RUN wget -q https://github.com/janosmiko/lfk/releases/download/v0.15.14/lfk_0.15.14_linux_amd64.tar.gz && \
   tar xf lfk_0.15.14_linux_amd64.tar.gz  lfk && chmod a+x lfk && mv lfk /usr/local/bin && \
@@ -32,7 +35,7 @@ RUN wget https://github.com/kdash-rs/kdash/releases/download/v2.1.1/kdash-linux.
   tar xf kdash-linux.tar.gz  kdash && chmod +x kdash && mv kdash /usr/local/bin && \
   rm kdash-linux.tar.gz
 
-ADD ./list_pods.py /app
+ADD ./container-scripts/list_pods.py /app
 
 ADD ./install_krew.sh /app
 RUN /app/install_krew.sh
