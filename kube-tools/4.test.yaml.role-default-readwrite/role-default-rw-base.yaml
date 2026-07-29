@@ -1,0 +1,28 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: read-base-default-rw
+
+rules:
+- apiGroups: [ "" ]
+  resources: [ "pods", "pods/log", "services", "configmaps", "secrets" ]
+  # NO: - nodes
+  # NO: - namespaces
+  verbs: [ "get", "watch", "list", "create", "update", "patch", "destroy"]
+
+- apiGroups: [ "apps" ]
+  #resources: [ "replicasets", "deployments", "daemonsets", "statefulsets" ]
+  resources: [ "replicasets", "replicasets/scale", "deployments", "deployments/scale", "daemonsets", "statefulsets", "statefulsets/scale" ]
+  verbs: [ "get", "watch", "list", "create", "update", "patch", "destroy"]
+
+- apiGroups: [ "autoscaling" ]
+  resources: [ " horizontalpodautoscalers" ]
+  verbs: [ "get", "watch", "list", "create", "update", "patch", "destroy"]
+
+- apiGroups: [ "batch" ]
+  resources: [ "jobs", "cronjobs" ]
+  verbs: [ "get", "watch", "list", "create", "update", "patch", "destroy"]
+- apiGroups: [ "discovery.k8s.io" ]
+  resources: [ "endpointslices" ]
+  verbs: [ "get", "watch", "list", "create", "update", "patch", "destroy"]
+

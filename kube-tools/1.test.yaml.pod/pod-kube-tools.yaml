@@ -13,3 +13,4 @@ spec:
     name: kube-tools
     imagePullPolicy: Always
     restartPolicy: Never
+    command: ['/bin/sleep', 'infinity']
