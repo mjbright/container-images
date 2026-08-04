@@ -1,5 +1,10 @@
 
-# TODO: Add cli/tui tools
+# TODO: Integrate "docker build" tips from
+- https://blog.devops.dev/your-docker-image-is-1-2-gb-because-you-stopped-reading-tutorials-in-2019-e31b314b14de
+- https://docs.google.com/document/d/1B7cxXsEwQJY9sW5ROeo5S5fxAniJ6n-eznCXqSKXX3E/edit?tab=t.0
+
+
+# TODO: in kube-tools image - add cli/tui tools
 - add kubectl
 - add lfk
 - add k9s
