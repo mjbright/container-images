@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Command-recording test double: never builds, runs, or publishes real containers.
+set -euo pipefail
+: "${FINCH_TEST_LOG:?Missing test log}"
+printf '%s|' "$@" >> "$FINCH_TEST_LOG"
+printf '\n' >> "$FINCH_TEST_LOG"
+case "$1" in
+    info) [[ "${FINCH_TEST_FAIL:-}" != info ]] ;;
+    build) [[ "${FINCH_TEST_FAIL:-}" != build ]] ;;
+    push) [[ "${FINCH_TEST_FAIL:-}" != push ]] ;;
+    tag) [[ "${FINCH_TEST_FAIL:-}" != tag ]] ;;
+    login)
+        if [[ " $* " == *" --password-stdin "* ]]; then
+            token="$(cat)"
+            [[ "$token" == "${FINCH_TEST_EXPECT_TOKEN:-}" ]] || exit 1
+        fi ;;
+    *) printf 'Unexpected mock command: %s\n' "$1" >&2; exit 1 ;;
+esac

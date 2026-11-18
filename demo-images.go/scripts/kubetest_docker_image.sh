@@ -1,44 +1,27 @@
-
-let V=1
-
-die() {
-    echo "$0: die - $*" >&2
+#!/usr/bin/env bash
+set -euo pipefail
+image="${1:?Usage: scripts/kubetest_docker_image.sh IMAGE [PORT] [NAMESPACE]}"
+port="${2:-18080}"
+namespace="${3:-default}"
+if ! [[ "$port" =~ ^[0-9]{1,5}$ ]] || ! ((10#$port >= 1024 && 10#$port <= 65535)); then
+    printf 'Port must be between 1024 and 65535\n' >&2
     exit 1
-}
-
-press() {
-    echo $*
-    echo "Press <return>"
-    read DUMMY
-    [ "$DUMMY" = "q" ] && exit 0
-    [ "$DUMMY" = "Q" ] && exit 0
-}
-
-if [ ! -z "$1" ]; then
-    case $1 in
-        [1-6]) V=$1;;
-        *) die "Unknown option <$1>";;
-    esac
-    shift
 fi
-
-POD_NAME=manualtest-mjbright-ckad-demo-a$V
-EXT_PORT=828$V
-
-kubectl run --generator=run-pod/v1 --image=mjbright/ckad-demo:alpine$V $POD_NAME
-
-#sleep 2
-#kubectl get pods
-
-RUN_LABEL="run=$POD_NAME"
-while [[ $(kubectl get pods -l $RUN_LABEL -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo "waiting for pod" && sleep 1; done
-
-#press "Wait for Pod to be running"
-
-kubectl get pods
-echo; echo "Now curl to 127.0.0.1:${EXT_PORT}"
-
-CMD="kubectl port-forward pod/$POD_NAME ${EXT_PORT}:80"
-echo $CMD
-$CMD
-
+command -v kubectl >/dev/null 2>&1
+pod_name="demo-images-test-$(date +%s)-$$"
+created=false
+cleanup() {
+    if "$created"; then
+        kubectl --namespace "$namespace" delete pod "$pod_name" --ignore-not-found --wait=false
+    fi
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+# Avoid the removed --generator option. The node selects its architecture from the OCI index.
+kubectl --namespace "$namespace" run "$pod_name" --image="$image" \
+    --restart=Never --image-pull-policy=Always --port=80
+created=true
+kubectl --namespace "$namespace" wait --for=condition=Ready "pod/$pod_name" --timeout=120s
+printf 'Use http://127.0.0.1:%s/ ; Ctrl-C cleans up only %s\n' "$port" "$pod_name"
+kubectl --namespace "$namespace" port-forward --address 127.0.0.1 "pod/$pod_name" "$port:80"

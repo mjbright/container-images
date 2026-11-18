@@ -1,0 +1,9 @@
+# Only application source, tests, and runtime assets enter the build context.
+**
+!go.mod
+!main.build.go
+!main_build_test.go
+!static/
+!static/**
+!templates/
+!templates/index.html.tmpl

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Command-recording test double: never contacts Docker Hub.
+set -euo pipefail
+: "${FINCH_TEST_LOG:?Missing test log}"
+printf '%s|' regctl "$@" >> "$FINCH_TEST_LOG"
+printf '\n' >> "$FINCH_TEST_LOG"
+case "$1" in
+    registry)
+        if [[ " $* " == *" --pass-stdin "* ]]; then
+            token="$(cat)"
+            [[ "$token" == "${FINCH_TEST_EXPECT_TOKEN:-}" ]] || exit 1
+        fi ;;
+    index) [[ "${FINCH_TEST_FAIL:-}" != index ]] ;;
+    manifest) [[ "${FINCH_TEST_FAIL:-}" != manifest ]] ;;
+    *) printf 'Unexpected mock regctl command: %s\n' "$1" >&2; exit 1 ;;
+esac
