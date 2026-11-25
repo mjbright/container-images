@@ -6,6 +6,8 @@ QUICK_BUILD=0
 PROMPTS=0
 D_USER=mjbright
 ##D_IMAGE=${D_USER}/dronestore:0.1
+ARCH="linux/amd64,linux/arm64"
+BUILD_ARGS="--platform $ARCH"
 
 HUB_PUSH=0
 
@@ -48,10 +50,13 @@ done
 
 ## -- Main: ---------------------------------------------------------------
 
-which docker 2>/dev/null && {
-    BUILD_ARGS="--progress plain"
-    BUILDER=$(which docker 2>/dev/null)
-}
+[ -f ~/.cbuild ] && { echo "source ~/.cbuild"; source ~/.cbuild; }
+[ -f   .cbuild ] && { echo "source   .cbuild"; source   .cbuild; }
+
+#which docker 2>/dev/null && {
+#    BUILD_ARGS="--progress plain"
+#    BUILDER=$(which docker 2>/dev/null)
+#}
 
 [ -z "$BUILDER" ] && {
      BUILDER=$(which podman 2>/dev/null)
@@ -113,18 +118,19 @@ for version in $VERSIONS; do
 
     ## -- Arch: ---------------------------------------------------------------
     if [ $QUICK_BUILD -eq 0 ]; then
-        [ $BUILDER != docker ] && die "buildx can only be used with docker, not '$BUILDER'"
+        #[ $BUILDER != docker ] && die "buildx can only be used with docker, not '$BUILDER'"
         echo
         PRESS "Building $D_IMAGE for multiple architectures"
         # See:
         # - https://www.docker.com/blog/how-to-rapidly-build-multi-architecture-images-with-buildx/
-        docker buildx ls
-        docker buildx create --name multi-builder --use --bootstrap
-        docker buildx ls
+        #$BUILDER ls
+        #$BUILDER create --name multi-builder --use --bootstrap
+        #$BUILDER ls
 
         # Now, you’ll jumpstart your multi-architecture build with the single docker buildx command shown below:
 
-        docker buildx build --push --progress plain --platform linux/amd64,linux/arm64 -t ${D_IMAGE} .
+        $BUILDER build --progress plain --platform linux/amd64,linux/arm64 -t ${D_IMAGE} .
+        $BUILDER push                   --platform linux/amd64,linux/arm64    ${D_IMAGE}
      fi
      END=$SECONDS
 

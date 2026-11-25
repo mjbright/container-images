@@ -1,11 +1,18 @@
-
-#FROM python:2.7
-FROM python:3
+# FROM ghcr.io/astral-sh/uv:latest
+FROM python:3.12-slim-trixie
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 ADD   . /code
 WORKDIR /code
 
-RUN pip install -U pip
-RUN pip install -r requirements.txt
+# Disable development dependencies
+ENV UV_NO_DEV=1
+RUN uv sync --locked
 
-CMD ["python", "app.py"]
+COPY pyproject.toml .
+RUN uv pip install -r pyproject.toml
+COPY . .
+RUN uv pip install -e .
+
+CMD ["uv", "run", "app.py"]
+
