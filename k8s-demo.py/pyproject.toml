@@ -1,0 +1,19 @@
+[project]
+name = "k8s-demo-py"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Michael Bright", email = "1880109+mjbright@users.noreply.github.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "kubernetes>=37.0.3",
+]
+
+[project.scripts]
+k8s-demo-py = "k8s_demo_py:main"
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"

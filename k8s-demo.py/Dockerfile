@@ -1,15 +1,20 @@
+# FROM ghcr.io/astral-sh/uv:latest
+FROM python:3.12-slim-trixie
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-#FROM python:3
-FROM python:3.11-slim-bookworm
-
+ADD   . /app
 WORKDIR /app
 
-# Note: ADD is like COPY but has more (unnecessary) functionality:
-#ADD static   /app
-#ADD httpd.py /app
+# Disable development dependencies
+ENV UV_NO_DEV=1
+RUN uv sync --locked
 
-# Note: Best to add httpd.py after static/ IFF Python code will change more frequently
-#       Allows to take advantage of cached image layers
+COPY pyproject.toml .
+RUN uv pip install -r pyproject.toml
+#COPY . .
+RUN uv pip install -e .
+
+WORKDIR /app
 COPY static        /app/static
 COPY templates     /app/templates
 COPY tmp/httpd.py  /app/httpd.py
@@ -19,5 +24,5 @@ COPY tmp/httpd.py  /app/httpd.py
 EXPOSE 8080
 
 # Note: The default command to run when a Container is created from this Container Image
-CMD /app/httpd.py
+CMD ["uv", "run", "/app/httpd.py"]
 

@@ -1,0 +1,5 @@
+BASE_IMAGE=mjbright/k8s-demo
+TAGS="py"
+ARCH="linux/amd64,linux/arm64"
+BUILD_ARGS="--platform $ARCH"
+

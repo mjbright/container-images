@@ -3,7 +3,11 @@
 IMAGE_BASE=mjbright/k8s-demo:py
 IMAGE=${IMAGE_BASE}
 
-BUILDER=docker
+[ -f ~/.cbuild ] && { echo "source ~/.cbuild"; source ~/.cbuild; }
+[ -f   .cbuild ] && { echo "source   .cbuild"; source   .cbuild; }
+mkdir tmp
+
+#BUILDER=docker
 #BUILDER=podman
 
 LOGGEDIN=0
@@ -32,11 +36,15 @@ RUN() {
 }
 
 LOGIN() {
-    [ $LOGGEDIN -ne 0 ] && return
-
-    RUN $BUILDER login
-    LOGGEDIN=1
+    echo "TODO: login"
 }
+
+#LOGIN() {
+#    [ $LOGGEDIN -ne 0 ] && return
+#
+#    RUN $BUILDER login
+#    LOGGEDIN=1
+#}
 
 BUILD() {
     IMAGE=$1; shift
@@ -44,21 +52,27 @@ BUILD() {
     [ "$PUSH" = "registry" ] && LOGIN
 
     if [ "$BUILDER" = "docker" ]; then
-        RUN docker build -t $IMAGE . --progress plain
+        RUN docker build $BUILD_ARGS -t $IMAGE . --progress plain
         RUN PUSH $IMAGE
     else
-        RUN podman build -t $IMAGE .
-        RUN podman login
+        RUN $BUILDER build $BUILD_ARGS -t $IMAGE .
+        #RUN $BUILDER login
         RUN PUSH $IMAGE
     fi
 }
 
 CREATE_TMP_HTTPD_PY() {
     # set -x
-    sed templates/httpd.py.0 \
+    echo "ASCIITEXT=$ASCIITEXT"
+    echo "PNG=$PNG"
+    echo "IMAGE=$IMAGE"
+
+    #set -x
+    sed \
             -e "s?^ASCIITEXT=.*?ASCIITEXT=\"$ASCIITEXT\"?" \
             -e "s?^PNG=.*?PNG=\"$PNG\"?"                   \
             -e "s?^IMAGE=.*?IMAGE=\"$IMAGE\"?"             \
+            < templates/httpd.py.0 \
             > tmp/httpd.py
     # set +x
 
@@ -124,7 +138,7 @@ PUSH() {
     IMAGE=$1
 
     case $PUSH in
-         registry)    $BUILDER push $IMAGE;;
+         registry)    $BUILDER push $BUILD_ARGS $IMAGE;;
 
          nerdctl)     echo "Images are large[1 GBy], save/load will take time ..."; set -x; $BUILDER image save $IMAGE | sudo nerdctl -n k8s.io image load; set +x;;
 
