@@ -2,8 +2,10 @@
 # Bash 3.2 compatible: works with the Bash shipped by macOS.
 set -euo pipefail
 
+DOCKERHUB_NAMESPACE=mjbright
+
 project_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-action=build
+action=build-push
 namespace="${DOCKERHUB_NAMESPACE:-}"
 platform_csv="${PLATFORMS:-linux/amd64,linux/arm64}"
 group_csv="${GROUPS_TO_BUILD:-k8s,docker}"
