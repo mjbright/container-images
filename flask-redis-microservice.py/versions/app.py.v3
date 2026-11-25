@@ -23,10 +23,7 @@ app = Flask(__name__)
 db = Redis( host = os.getenv( 'REDIS', 'redis'),
             port = int(os.getenv( 'REDIS_SERVICE_PORT', '6379' ) ) )
 
-@app.route('/')
-def hello():
-    db.incr('count')
-
+def __get():
     HTML=True
 
     userAgent = request.headers['User-Agent'].lower()
@@ -45,7 +42,7 @@ def hello():
 <html>
   <head>
     <style>
-          body {background-color: #ff0000;};
+          body {background-color: #0000ff;};
           h1   {color: blue;};
           p    {color: red;};
     </style>
@@ -56,6 +53,15 @@ def hello():
 </html>
 
 ''' % (host, db.get('count'))
+
+@app.route('/get')
+def get():
+    return __get()
+
+@app.route('/')
+def hello():
+    db.incr('count')
+    return __get()
 
 #    'rgb(0,255,0)', // version1
 #    'rgb(0,0,255)',

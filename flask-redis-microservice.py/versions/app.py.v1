@@ -21,12 +21,18 @@ app = Flask(__name__)
 db = Redis( host = os.getenv( 'REDIS', 'redis'),
             port = int(os.getenv( 'REDIS_SERVICE_PORT', '6379' ) ) )
 
+def __get():
+    host = socket.gethostname()
+    return f'{__COLOUR__}[__IMAGE__]{colour.C_NORMAL} [{host}] Redis counter value={ db.get("count") }\n'
+
+@app.route('/get')
+def get():
+    return __get()
+
 @app.route('/')
 def hello():
     db.incr('count')
-
-    host = socket.gethostname()
-    return f'{__COLOUR__}[__IMAGE__]{colour.C_NORMAL} [{host}] Redis counter value={ db.get("count") }\n'
+    return __get()
     
 if __name__ == "__main__":
     print(f"Launching server on port {colour.C_RED}5000{colour.C_NORMAL}\n")

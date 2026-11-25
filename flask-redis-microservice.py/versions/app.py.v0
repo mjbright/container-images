@@ -6,6 +6,7 @@
 from flask import Flask, request, Response, stream_with_context, jsonify
 from redis import Redis
 import os, time, json
+import socket
 
 import colour
 colour.colour(True)
@@ -14,11 +15,18 @@ app = Flask(__name__)
 db = Redis( host = os.getenv( 'REDIS', 'redis'),
             port = int(os.getenv( 'REDIS_SERVICE_PORT', '6379' ) ) )
 
+def __get():
+    host = socket.gethostname()
+    return f'{__COLOUR__}[__IMAGE__]{colour.C_NORMAL} [{host}] Redis counter value={ db.get("count") }\n'
+
+@app.route('/get')
+def get():
+    return __get()
+
 @app.route('/')
 def hello():
     db.incr('count')
-    return f'{__COLOUR__}[__IMAGE__]{colour.C_NORMAL} [{host}] Redis counter value={ db.get("count") }\n'
-
+    return __get()
 
 @app.route('/<path:path>', methods = ['PUT', 'GET'])
 def home(path):
